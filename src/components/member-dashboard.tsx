@@ -17,15 +17,15 @@ function MemberDashboard({
                 <Card className="border-l-4 border-l-orange-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Membership Status
+                            Estado de membresía
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold text-green-600">
-                            Active
+                            Activa
                         </div>
                         <p className="text-xs text-gray-500">
-                            Expires: Dec 31, 2024
+                            Expira: 31 de diciembre de 2024
                         </p>
                     </CardContent>
                 </Card>
@@ -33,13 +33,13 @@ function MemberDashboard({
                 <Card className="border-l-4 border-l-blue-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Current Locker
+                            Casillero actual
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">A-42</div>
                         <p className="text-xs text-gray-500">
-                            Level 1, Section A
+                            Nivel 1, Sección A
                         </p>
                     </CardContent>
                 </Card>
@@ -47,13 +47,13 @@ function MemberDashboard({
                 <Card className="border-l-4 border-l-purple-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            This Month Visits
+                            Visitas este mes
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">18</div>
                         <p className="text-xs text-gray-500">
-                            +3 from last month
+                            +3 respecto al mes pasado
                         </p>
                     </CardContent>
                 </Card>
@@ -61,13 +61,13 @@ function MemberDashboard({
                 <Card className="border-l-4 border-l-green-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Next Payment
+                            Próximo pago
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">$89</div>
                         <p className="text-xs text-gray-500">
-                            Due: Jan 1, 2025
+                            Vence: 1 de enero de 2025
                         </p>
                     </CardContent>
                 </Card>
@@ -78,10 +78,10 @@ function MemberDashboard({
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <QrCode className="h-5 w-5 text-orange-500" />
-                            Quick Access
+                            Acceso rápido
                         </CardTitle>
                         <CardDescription>
-                            Scan QR code for gym entry
+                            Escanea el código QR para ingresar al gimnasio
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="text-center">
@@ -91,7 +91,7 @@ function MemberDashboard({
                             </div>
                         </div>
                         <p className="text-sm text-gray-600">
-                            Show this QR code at the entrance
+                            Muestra este código QR en la entrada
                         </p>
                     </CardContent>
                 </Card>
@@ -100,33 +100,33 @@ function MemberDashboard({
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Dumbbell className="h-5 w-5 text-orange-500" />
-                            Today's Workout
+                            Entrenamiento de hoy
                         </CardTitle>
                         <CardDescription>
-                            Your personalized routine
+                            Tu rutina personalizada
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
                             <div className="flex justify-between items-center">
                                 <span className="font-medium">
-                                    Upper Body Strength
+                                    Fuerza de tren superior
                                 </span>
                                 <Badge variant="outline">45 min</Badge>
                             </div>
                             <div className="space-y-2">
                                 <div className="flex justify-between text-sm">
-                                    <span>Progress</span>
-                                    <span>3/5 exercises</span>
+                                    <span>Progreso</span>
+                                    <span>3/5 ejercicios</span>
                                 </div>
                                 <Progress value={60} className="h-2" />
                             </div>
                             <div className="space-y-2">
                                 <div className="text-sm font-medium">
-                                    Next Exercise:
+                                    Próximo ejercicio:
                                 </div>
                                 <div className="text-sm text-gray-600">
-                                    Bench Press - 3 sets x 12 reps
+                                    Press de banca - 3 series x 12 repeticiones
                                 </div>
                             </div>
                             <Button
@@ -135,7 +135,7 @@ function MemberDashboard({
                                     setCurrentView("workout-progress")
                                 }
                             >
-                                Continue Workout
+                                Continuar entrenamiento
                             </Button>
                         </div>
                     </CardContent>
@@ -144,29 +144,29 @@ function MemberDashboard({
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Recent Activity</CardTitle>
+                    <CardTitle>Actividad reciente</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-4">
                         {[
                             {
-                                date: "Today, 2:30 PM",
-                                activity: "Gym Entry",
+                                date: "Hoy, 2:30 PM",
+                                activity: "Ingreso al gimnasio",
                                 status: "success",
                             },
                             {
-                                date: "Yesterday, 6:00 PM",
-                                activity: "Workout Completed",
+                                date: "Ayer, 6:00 PM",
+                                activity: "Entrenamiento completado",
                                 status: "success",
                             },
                             {
-                                date: "Dec 15, 3:15 PM",
-                                activity: "Payment Processed",
+                                date: "15 de dic, 3:15 PM",
+                                activity: "Pago procesado",
                                 status: "success",
                             },
                             {
-                                date: "Dec 14, 7:30 AM",
-                                activity: "Gym Entry",
+                                date: "14 de dic, 7:30 AM",
+                                activity: "Ingreso al gimnasio",
                                 status: "success",
                             },
                         ].map((item, index) => (
@@ -186,7 +186,7 @@ function MemberDashboard({
                                     variant="outline"
                                     className="text-green-600 border-green-600"
                                 >
-                                    Success
+                                    Éxito
                                 </Badge>
                             </div>
                         ))}

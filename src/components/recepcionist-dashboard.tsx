@@ -19,13 +19,13 @@ function ReceptionistDashboard({
                 <Card className="border-l-4 border-l-orange-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Today's Check-ins
+                            Ingresos hoy
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">127</div>
                         <p className="text-xs text-gray-500">
-                            +12% from yesterday
+                            +12% respecto a ayer
                         </p>
                     </CardContent>
                 </Card>
@@ -33,13 +33,13 @@ function ReceptionistDashboard({
                 <Card className="border-l-4 border-l-blue-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Active Members
+                            Miembros activos
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">1,247</div>
                         <p className="text-xs text-gray-500">
-                            Currently in gym: 89
+                            Actualmente en el gimnasio: 89
                         </p>
                     </CardContent>
                 </Card>
@@ -47,27 +47,25 @@ function ReceptionistDashboard({
                 <Card className="border-l-4 border-l-purple-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Available Lockers
+                            Lockers disponibles
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">23</div>
-                        <p className="text-xs text-gray-500">
-                            Out of 150 total
-                        </p>
+                        <p className="text-xs text-gray-500">De 150 en total</p>
                     </CardContent>
                 </Card>
 
                 <Card className="border-l-4 border-l-green-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Pending Payments
+                            Pagos pendientes
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">$2,340</div>
+                        <div className="text-2xl font-bold">$COP 200.000</div>
                         <p className="text-xs text-gray-500">
-                            15 overdue accounts
+                            15 cuentas por cobrar
                         </p>
                     </CardContent>
                 </Card>
@@ -78,10 +76,10 @@ function ReceptionistDashboard({
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <QrCode className="h-5 w-5 text-orange-500" />
-                            Quick Access Control
+                            Control rápido de acceso
                         </CardTitle>
                         <CardDescription>
-                            Scan member QR codes for entry
+                            Escanear QR de usuario para el ingreso
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -90,10 +88,10 @@ function ReceptionistDashboard({
                                 <QrCode className="h-16 w-16 text-gray-400" />
                             </div>
                             <p className="text-sm text-gray-600">
-                                Ready to scan member QR codes
+                                Listo para escanear QR de usuario
                             </p>
                             <Button className="w-full bg-orange-500 hover:bg-orange-600">
-                                Start Scanning
+                                Iniciar escaneo
                             </Button>
                         </div>
                     </CardContent>
@@ -103,7 +101,7 @@ function ReceptionistDashboard({
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Users className="h-5 w-5 text-orange-500" />
-                            Recent Member Activity
+                            Actividad reciente
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -111,26 +109,26 @@ function ReceptionistDashboard({
                             {[
                                 {
                                     name: "John Doe",
-                                    action: "Checked In",
-                                    time: "2 min ago",
+                                    action: "Entrada",
+                                    time: "2 minutos",
                                     status: "in",
                                 },
                                 {
                                     name: "Sarah Wilson",
-                                    action: "Checked Out",
-                                    time: "5 min ago",
+                                    action: "Salida",
+                                    time: "5 minutos",
                                     status: "out",
                                 },
                                 {
                                     name: "Mike Johnson",
-                                    action: "Checked In",
-                                    time: "8 min ago",
+                                    action: "Entrada",
+                                    time: "8 minutos",
                                     status: "in",
                                 },
                                 {
                                     name: "Emma Davis",
-                                    action: "Locker Assigned",
-                                    time: "12 min ago",
+                                    action: "Asignación de locker",
+                                    time: "12 minutos",
                                     status: "locker",
                                 },
                             ].map((member, index) => (
@@ -186,7 +184,7 @@ function ReceptionistDashboard({
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Quick Actions</CardTitle>
+                    <CardTitle>Acciones rápidas</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -198,14 +196,14 @@ function ReceptionistDashboard({
                             }
                         >
                             <Users className="h-6 w-6" />
-                            <span className="text-sm">New Member</span>
+                            <span className="text-sm">Nuevo miembro</span>
                         </Button>
                         <Button
                             variant="outline"
                             className="h-20 flex-col gap-2 bg-transparent"
                         >
                             <Key className="h-6 w-6" />
-                            <span className="text-sm">Assign Locker</span>
+                            <span className="text-sm">Asignar locker</span>
                         </Button>
                         <Button
                             variant="outline"
@@ -213,14 +211,14 @@ function ReceptionistDashboard({
                             onClick={() => setCurrentView("billing-payment")}
                         >
                             <CreditCard className="h-6 w-6" />
-                            <span className="text-sm">Process Payment</span>
+                            <span className="text-sm">Procesar pago</span>
                         </Button>
                         <Button
                             variant="outline"
                             className="h-20 flex-col gap-2 bg-transparent"
                         >
                             <FileText className="h-6 w-6" />
-                            <span className="text-sm">Generate Report</span>
+                            <span className="text-sm">Generar reporte</span>
                         </Button>
                     </div>
                 </CardContent>

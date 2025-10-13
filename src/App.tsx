@@ -41,8 +41,6 @@ function App() {
         name: "John Doe",
     });
 
-    console.log(user);
-
     return (
         <Routes>
             {/* Login */}
@@ -70,7 +68,7 @@ function App() {
                 {/* <Route path="/billing" element={<BillingPage />} /> */}
                 {/* <Route path="/workouts" element={<WorkoutPage />} /> */}
                 {/* 404 route */}
-                <Route path="*" element={<Navigate to="/dashboard" />} />
+                <Route path="*" element={<Navigate to="/login" />} />
             </Route>
         </Routes>
     );

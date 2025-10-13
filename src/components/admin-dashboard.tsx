@@ -19,13 +19,13 @@ function AdminDashboard({
                 <Card className="border-l-4 border-l-orange-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Total Revenue
+                            Ingresos totales
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">$47,892</div>
                         <p className="text-xs text-gray-500">
-                            +8.2% from last month
+                            +8.2% respecto al mes pasado
                         </p>
                     </CardContent>
                 </Card>
@@ -33,13 +33,13 @@ function AdminDashboard({
                 <Card className="border-l-4 border-l-blue-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Total Members
+                            Miembros totales
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">1,247</div>
                         <p className="text-xs text-gray-500">
-                            +23 new this month
+                            +23 nuevos este mes
                         </p>
                     </CardContent>
                 </Card>
@@ -47,13 +47,13 @@ function AdminDashboard({
                 <Card className="border-l-4 border-l-purple-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Gym Utilization
+                            Utilización del gimnasio
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">78%</div>
                         <p className="text-xs text-gray-500">
-                            Peak hours: 6-8 PM
+                            Horas pico: 6–8 PM
                         </p>
                     </CardContent>
                 </Card>
@@ -61,13 +61,13 @@ function AdminDashboard({
                 <Card className="border-l-4 border-l-green-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Staff Performance
+                            Rendimiento del personal
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">96%</div>
                         <p className="text-xs text-gray-500">
-                            Customer satisfaction
+                            Satisfacción del cliente
                         </p>
                     </CardContent>
                 </Card>
@@ -78,32 +78,32 @@ function AdminDashboard({
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <BarChart3 className="h-5 w-5 text-orange-500" />
-                            Revenue Analytics
+                            Análisis de ingresos
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <Tabs defaultValue="monthly" className="w-full">
                             <TabsList className="grid w-full grid-cols-3">
-                                <TabsTrigger value="daily">Daily</TabsTrigger>
+                                <TabsTrigger value="daily">Diario</TabsTrigger>
                                 <TabsTrigger value="monthly">
-                                    Monthly
+                                    Mensual
                                 </TabsTrigger>
-                                <TabsTrigger value="yearly">Yearly</TabsTrigger>
+                                <TabsTrigger value="yearly">Anual</TabsTrigger>
                             </TabsList>
                             <TabsContent value="monthly" className="space-y-4">
                                 <div className="h-48 bg-gray-50 rounded-lg flex items-center justify-center">
                                     <div className="text-center">
                                         <BarChart3 className="h-12 w-12 text-gray-400 mx-auto mb-2" />
                                         <p className="text-sm text-gray-500">
-                                            Revenue chart would be displayed
-                                            here
+                                            Aquí se mostraría el gráfico de
+                                            ingresos
                                         </p>
                                     </div>
                                 </div>
                                 <div className="grid grid-cols-2 gap-4 text-sm">
                                     <div>
                                         <p className="text-gray-500">
-                                            This Month
+                                            Este mes
                                         </p>
                                         <p className="font-bold text-lg">
                                             $47,892
@@ -111,7 +111,7 @@ function AdminDashboard({
                                     </div>
                                     <div>
                                         <p className="text-gray-500">
-                                            Last Month
+                                            Mes pasado
                                         </p>
                                         <p className="font-bold text-lg">
                                             $44,231
@@ -127,14 +127,14 @@ function AdminDashboard({
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Users className="h-5 w-5 text-orange-500" />
-                            Member Statistics
+                            Estadísticas de miembros
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
                             <div className="flex justify-between items-center">
                                 <span className="text-sm">
-                                    Active Memberships
+                                    Membresías activas
                                 </span>
                                 <span className="font-bold">1,247</span>
                             </div>
@@ -142,14 +142,14 @@ function AdminDashboard({
 
                             <div className="flex justify-between items-center">
                                 <span className="text-sm">
-                                    Expired (Grace Period)
+                                    Vencidas (período de gracia)
                                 </span>
                                 <span className="font-bold">43</span>
                             </div>
                             <Progress value={15} className="h-2" />
 
                             <div className="flex justify-between items-center">
-                                <span className="text-sm">New This Month</span>
+                                <span className="text-sm">Nuevos este mes</span>
                                 <span className="font-bold">23</span>
                             </div>
                             <Progress value={60} className="h-2" />
@@ -160,7 +160,7 @@ function AdminDashboard({
                                         94%
                                     </p>
                                     <p className="text-xs text-gray-500">
-                                        Retention Rate
+                                        Tasa de retención
                                     </p>
                                 </div>
                                 <div className="text-center">
@@ -168,7 +168,7 @@ function AdminDashboard({
                                         $89
                                     </p>
                                     <p className="text-xs text-gray-500">
-                                        Avg. Monthly Fee
+                                        Cuota mensual promedio
                                     </p>
                                 </div>
                             </div>
@@ -179,7 +179,7 @@ function AdminDashboard({
 
             <Card>
                 <CardHeader>
-                    <CardTitle>System Overview</CardTitle>
+                    <CardTitle>Resumen del sistema</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -187,28 +187,28 @@ function AdminDashboard({
                             <QrCode className="h-8 w-8 mx-auto mb-2 text-orange-500" />
                             <p className="font-bold text-lg">2,847</p>
                             <p className="text-sm text-gray-500">
-                                QR Scans Today
+                                Escaneos QR hoy
                             </p>
                         </div>
                         <div className="text-center p-4 border rounded-lg">
                             <Key className="h-8 w-8 mx-auto mb-2 text-blue-500" />
                             <p className="font-bold text-lg">127/150</p>
                             <p className="text-sm text-gray-500">
-                                Lockers Occupied
+                                Casilleros ocupados
                             </p>
                         </div>
                         <div className="text-center p-4 border rounded-lg">
                             <CreditCard className="h-8 w-8 mx-auto mb-2 text-green-500" />
                             <p className="font-bold text-lg">$2,340</p>
                             <p className="text-sm text-gray-500">
-                                Pending Payments
+                                Pagos pendientes
                             </p>
                         </div>
                         <div className="text-center p-4 border rounded-lg">
                             <Settings className="h-8 w-8 mx-auto mb-2 text-purple-500" />
                             <p className="font-bold text-lg">99.8%</p>
                             <p className="text-sm text-gray-500">
-                                System Uptime
+                                Tiempo en línea del sistema
                             </p>
                         </div>
                     </div>

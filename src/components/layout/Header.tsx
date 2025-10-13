@@ -66,7 +66,7 @@ export default function Header({
             <div className="p-4 bg-orange-50 border-b">
                 <div className="flex flex-wrap gap-2">
                     <span className="text-sm font-medium text-gray-700 mr-2">
-                        Demo - Switch Role:
+                        Demo - Cambiar rol:
                     </span>
                     {users.map((currentUser: any) => (
                         <Button

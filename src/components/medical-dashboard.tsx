@@ -18,13 +18,13 @@ function MedicalDashboard({
                 <Card className="border-l-4 border-l-orange-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Active Patients
+                            Pacientes activos
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">89</div>
                         <p className="text-xs text-gray-500">
-                            Under medical supervision
+                            Bajo supervisión médica
                         </p>
                     </CardContent>
                 </Card>
@@ -32,13 +32,13 @@ function MedicalDashboard({
                 <Card className="border-l-4 border-l-blue-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Workout Plans
+                            Planes de entrenamiento
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">156</div>
                         <p className="text-xs text-gray-500">
-                            Active prescriptions
+                            Prescripciones activas
                         </p>
                     </CardContent>
                 </Card>
@@ -46,13 +46,13 @@ function MedicalDashboard({
                 <Card className="border-l-4 border-l-purple-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Today's Appointments
+                            Citas de hoy
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">12</div>
                         <p className="text-xs text-gray-500">
-                            3 pending consultations
+                            3 citas pendientes
                         </p>
                     </CardContent>
                 </Card>
@@ -60,13 +60,13 @@ function MedicalDashboard({
                 <Card className="border-l-4 border-l-green-500">
                     <CardHeader className="pb-2">
                         <CardTitle className="text-sm font-medium text-gray-600">
-                            Recovery Progress
+                            Progreso de recuperación
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">94%</div>
                         <p className="text-xs text-gray-500">
-                            Average completion rate
+                            Promedio de completación
                         </p>
                     </CardContent>
                 </Card>
@@ -77,7 +77,7 @@ function MedicalDashboard({
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Calendar className="h-5 w-5 text-orange-500" />
-                            Today's Schedule
+                            Agenda de hoy
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -86,26 +86,26 @@ function MedicalDashboard({
                                 {
                                     time: "09:00",
                                     patient: "John Doe",
-                                    type: "Initial Assessment",
-                                    status: "completed",
+                                    type: "Evaluación inicial",
+                                    status: "Completada",
                                 },
                                 {
                                     time: "10:30",
                                     patient: "Sarah Wilson",
-                                    type: "Progress Review",
-                                    status: "current",
+                                    type: "Revisión de progreso",
+                                    status: "Actual",
                                 },
                                 {
                                     time: "14:00",
                                     patient: "Mike Johnson",
-                                    type: "Workout Plan Update",
-                                    status: "upcoming",
+                                    type: "Actualización de plan de entrenamiento",
+                                    status: "Proxima",
                                 },
                                 {
                                     time: "15:30",
                                     patient: "Emma Davis",
-                                    type: "Recovery Check",
-                                    status: "upcoming",
+                                    type: "Revisión de recuperación",
+                                    status: "Proxima",
                                 },
                             ].map((appointment, index) => (
                                 <div
@@ -128,10 +128,10 @@ function MedicalDashboard({
                                     <Badge
                                         variant="outline"
                                         className={
-                                            appointment.status === "completed"
+                                            appointment.status === "Completada"
                                                 ? "text-green-600 border-green-600"
                                                 : appointment.status ===
-                                                  "current"
+                                                  "Actual"
                                                 ? "text-orange-600 border-orange-600"
                                                 : "text-blue-600 border-blue-600"
                                         }
@@ -148,7 +148,7 @@ function MedicalDashboard({
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Dumbbell className="h-5 w-5 text-orange-500" />
-                            Recent Workout Plans
+                            Planes de entrenamiento recientes
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -156,19 +156,19 @@ function MedicalDashboard({
                             {[
                                 {
                                     patient: "John Doe",
-                                    plan: "Post-Injury Recovery",
+                                    plan: "Recuperación por lesión",
                                     progress: 85,
                                     updated: "2 days ago",
                                 },
                                 {
                                     patient: "Sarah Wilson",
-                                    plan: "Strength Building",
+                                    plan: "Fortalecimiento",
                                     progress: 92,
                                     updated: "1 day ago",
                                 },
                                 {
                                     patient: "Mike Johnson",
-                                    plan: "Cardio Rehabilitation",
+                                    plan: "Rehabilitación cardiovascular",
                                     progress: 67,
                                     updated: "3 days ago",
                                 },
@@ -215,28 +215,30 @@ function MedicalDashboard({
                             className="h-20 flex-col gap-2 bg-transparent"
                         >
                             <Users className="h-6 w-6" />
-                            <span className="text-sm">New Assessment</span>
+                            <span className="text-sm">Nueva evaluación</span>
                         </Button>
                         <Button
                             variant="outline"
                             className="h-20 flex-col gap-2 bg-transparent"
                         >
                             <Dumbbell className="h-6 w-6" />
-                            <span className="text-sm">Create Plan</span>
+                            <span className="text-sm">Nuevo plan</span>
                         </Button>
                         <Button
                             variant="outline"
                             className="h-20 flex-col gap-2 bg-transparent"
                         >
                             <FileText className="h-6 w-6" />
-                            <span className="text-sm">Medical Records</span>
+                            <span className="text-sm">
+                                Nuevos registros médicos
+                            </span>
                         </Button>
                         <Button
                             variant="outline"
                             className="h-20 flex-col gap-2 bg-transparent"
                         >
                             <Calendar className="h-6 w-6" />
-                            <span className="text-sm">Schedule</span>
+                            <span className="text-sm">Agenda</span>
                         </Button>
                     </div>
                 </CardContent>

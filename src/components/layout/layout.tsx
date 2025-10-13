@@ -34,31 +34,35 @@ export default function Layout({
             case "Member":
                 return [
                     ...baseItems,
-                    { icon: User, label: "My Profile", id: "profile" },
-                    { icon: QrCode, label: "QR Access", id: "qr-access" },
-                    { icon: Key, label: "My Locker", id: "locker" },
-                    { icon: CreditCard, label: "Payments", id: "payments" },
-                    { icon: Dumbbell, label: "My Workouts", id: "workouts" },
+                    { icon: User, label: "Mi perfil", id: "profile" },
+                    { icon: QrCode, label: "Acceso QR", id: "qr-access" },
+                    { icon: Key, label: "Mi locker", id: "locker" },
+                    { icon: CreditCard, label: "Pagos", id: "payments" },
+                    {
+                        icon: Dumbbell,
+                        label: "Mis entrenamientos",
+                        id: "workouts",
+                    },
                 ];
             case "Receptionist":
                 return [
                     ...baseItems,
-                    { icon: Users, label: "Members", id: "members" },
+                    { icon: Users, label: "Miembros", id: "members" },
                     {
                         icon: QrCode,
-                        label: "Access Control",
+                        label: "Control de acceso",
                         id: "access-control",
                     },
-                    { icon: Key, label: "Lockers", id: "lockers" },
-                    { icon: CreditCard, label: "Billing", id: "billing" },
+                    { icon: Key, label: "Locker", id: "locker" },
+                    { icon: CreditCard, label: "Pagos", id: "billing" },
                 ];
             case "Medical Staff":
                 return [
                     ...baseItems,
-                    { icon: Users, label: "Members", id: "members" },
+                    { icon: Users, label: "Miembros", id: "members" },
                     {
                         icon: Dumbbell,
-                        label: "Workout Plans",
+                        label: "Planes de entrenamiento",
                         id: "workout-plans",
                     },
                     { icon: FileText, label: "Medical Records", id: "medical" },
@@ -66,10 +70,10 @@ export default function Layout({
             case "Administrator":
                 return [
                     ...baseItems,
-                    { icon: Users, label: "Members", id: "members" },
-                    { icon: BarChart3, label: "Reports", id: "reports" },
-                    { icon: CreditCard, label: "Financial", id: "financial" },
-                    { icon: Settings, label: "Settings", id: "settings" },
+                    { icon: Users, label: "Miembros", id: "members" },
+                    { icon: BarChart3, label: "Reportes", id: "reports" },
+                    { icon: CreditCard, label: "Financiero", id: "financial" },
+                    { icon: Settings, label: "Configuración", id: "settings" },
                 ];
             default:
                 return baseItems;

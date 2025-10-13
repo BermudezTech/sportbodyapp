@@ -49,33 +49,33 @@ const mockUsers = {
 // Error types for different scenarios
 const errorMessages = {
     invalidCredentials: {
-        title: "Invalid Credentials",
+        title: "Credenciales Inválidas",
         message:
-            "The email or password you entered is incorrect. Please check your credentials and try again.",
+            "El correo electrónico o la contraseña son incorrectos. Por favor, verifica tus credenciales e intenta nuevamente.",
         type: "user",
     },
     serverError: {
-        title: "Server Error",
+        title: "Error del Servidor",
         message:
-            "We're experiencing technical difficulties. Please try again in a few moments or contact support if the problem persists.",
+            "Ha ocurrido un error en el servidor. Por favor, intenta nuevamente más tarde.",
         type: "server",
     },
     networkError: {
-        title: "Connection Error",
+        title: "Error de Red",
         message:
-            "Unable to connect to the server. Please check your internet connection and try again.",
+            "No se pudo establecer una conexión con el servidor. Por favor, verifica tu conexión a Internet e intenta nuevamente.",
         type: "network",
     },
     accountLocked: {
-        title: "Account Locked",
+        title: "Cuenta Bloqueada",
         message:
-            "Your account has been temporarily locked due to multiple failed login attempts. Please contact support or try again in 30 minutes.",
+            "Tu cuenta ha sido bloqueada temporalmente. Por favor, intenta nuevamente más tarde.",
         type: "security",
     },
     maintenanceMode: {
-        title: "System Maintenance",
+        title: "Modo de Mantenimiento",
         message:
-            "The system is currently under maintenance. Please try again later or contact support for more information.",
+            "El sistema se encuentra en modo de mantenimiento. Por favor, intenta nuevamente más tarde.",
         type: "maintenance",
     },
 };
@@ -212,7 +212,7 @@ export default function LoginPage() {
                         Sport Body Gym
                     </h1>
                     <p className="text-gray-600">
-                        Management & Access Control System
+                        Sistema de Gestión y Control de Acceso
                     </p>
                 </div>
 
@@ -220,17 +220,17 @@ export default function LoginPage() {
                 <Card className="shadow-xl border-0">
                     <CardHeader className="space-y-1 pb-6">
                         <CardTitle className="text-2xl font-bold text-center">
-                            Welcome Back
+                            Bienvenido
                         </CardTitle>
                         <CardDescription className="text-center">
-                            Sign in to access your gym management dashboard
+                            Inicia sesión para acceder a tu cuenta
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleLogin} className="space-y-4">
                             {/* Email Field */}
                             <div className="space-y-2">
-                                <Label htmlFor="email">Email Address</Label>
+                                <Label htmlFor="email">Email</Label>
                                 <div className="relative">
                                     <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                                     <Input
@@ -252,7 +252,7 @@ export default function LoginPage() {
 
                             {/* Password Field */}
                             <div className="space-y-2">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">Contraseña</Label>
                                 <div className="relative">
                                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                                     <Input
@@ -306,14 +306,14 @@ export default function LoginPage() {
                                         htmlFor="remember"
                                         className="text-sm text-gray-600"
                                     >
-                                        Remember me
+                                        Recuerdame
                                     </Label>
                                 </div>
                                 <Button
                                     variant="link"
                                     className="px-0 text-orange-600 hover:text-orange-700"
                                 >
-                                    Forgot password?
+                                    ¿Olvidaste tu contraseña?
                                 </Button>
                             </div>
 
@@ -326,10 +326,10 @@ export default function LoginPage() {
                                 {isLoading ? (
                                     <div className="flex items-center gap-2">
                                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                                        Signing in...
+                                        Iniciando sesión
                                     </div>
                                 ) : (
-                                    "Sign In"
+                                    "Iniciar Sesión"
                                 )}
                             </Button>
                         </form>
@@ -337,7 +337,7 @@ export default function LoginPage() {
                         {/* Demo Credentials */}
                         <div className="mt-6 pt-6 border-t">
                             <p className="text-sm text-gray-600 text-center mb-3">
-                                Demo Credentials:
+                                Inicia sesión con credenciales de demo:
                             </p>
                             <div className="grid grid-cols-2 gap-2">
                                 <Button
@@ -346,7 +346,7 @@ export default function LoginPage() {
                                     onClick={() => fillDemoCredentials("admin")}
                                     className="text-xs"
                                 >
-                                    Administrator
+                                    Administrador
                                 </Button>
                                 <Button
                                     variant="outline"
@@ -356,7 +356,7 @@ export default function LoginPage() {
                                     }
                                     className="text-xs"
                                 >
-                                    Receptionist
+                                    Receptionista
                                 </Button>
                                 <Button
                                     variant="outline"
@@ -366,7 +366,7 @@ export default function LoginPage() {
                                     }
                                     className="text-xs"
                                 >
-                                    Medical Staff
+                                    Personal Medico
                                 </Button>
                                 <Button
                                     variant="outline"
@@ -376,7 +376,7 @@ export default function LoginPage() {
                                     }
                                     className="text-xs"
                                 >
-                                    Member
+                                    Miembro
                                 </Button>
                             </div>
                         </div>
@@ -387,7 +387,7 @@ export default function LoginPage() {
                 <div className="text-center mt-6 text-sm text-gray-500">
                     <p>© 2024 Sport Body Gym. All rights reserved.</p>
                     <p className="mt-1">
-                        Need help? Contact{" "}
+                        Necesita ayuda?{" "}
                         <Button
                             variant="link"
                             className="px-1 text-orange-600 hover:text-orange-700 text-sm"

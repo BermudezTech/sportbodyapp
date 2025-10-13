@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LogOut } from "lucide-react";
+import { NavLink } from "react-router";
 
 export default function Sidebar({ navigationItems, user }: any) {
     return (
@@ -40,16 +41,28 @@ export default function Sidebar({ navigationItems, user }: any) {
                             <p className="font-medium text-white">
                                 {user.name}
                             </p>
-                            <p className="text-sm text-gray-400">{user.role}</p>
+                            <p className="text-sm text-gray-400">
+                                {user.role === "Member"
+                                    ? "Afiliado"
+                                    : user.role === "Receptionist"
+                                    ? "Recepcionista"
+                                    : user.role === "Medical Staff"
+                                    ? "Personal médico"
+                                    : user.role === "Administrator"
+                                    ? "Administrador"
+                                    : ""}
+                            </p>
                         </div>
                     </div>
-                    <Button
-                        variant="ghost"
-                        className="w-full justify-start text-white hover:bg-red-600"
-                    >
-                        <LogOut className="mr-3 h-5 w-5" />
-                        Logout
-                    </Button>
+                    <NavLink to="/login">
+                        <Button
+                            variant="ghost"
+                            className="w-full justify-start text-white hover:bg-red-600"
+                        >
+                            <LogOut className="mr-3 h-5 w-5" />
+                            Cerrar sesión
+                        </Button>
+                    </NavLink>
                 </div>
             </div>
         </div>

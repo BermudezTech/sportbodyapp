@@ -2,107 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    border-color: #e2e8f0;
+}
+
+button {
+    cursor: pointer;
+}
+
+.bg-card {
+    background-color: white;
+}
+
 @layer base {
+    /* 1. Default (Light) Theme */
     :root {
-        --background: 0 0% 100%;
-        --foreground: 240 10% 3.9%;
-        --card: 0 0% 100%;
-        --card-foreground: 240 10% 3.9%;
-        --popover: 0 0% 100%;
-        --popover-foreground: 240 10% 3.9%;
-        --primary: 24 100% 50%; /* Orange-500 */
-        --primary-foreground: 0 0% 98%;
-        --secondary: 240 4.8% 95.9%;
-        --secondary-foreground: 240 5.9% 10%;
-        --muted: 240 4.8% 95.9%;
-        --muted-foreground: 240 3.8% 46.1%;
-        --accent: 240 4.8% 95.9%;
-        --accent-foreground: 240 5.9% 10%;
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 240 5.9% 90%;
-        --input: 240 5.9% 90%;
-        --ring: 24 100% 50%; /* Orange-500 */
-        --radius: 0.5rem;
+        --background: #ffffff;
+        --foreground: #020817;
+        --card: #ffffff;
+        --card-foreground: #020817;
+        --primary: #1e40af;
+        --primary-foreground: #eff6ff;
+        --muted: #f1f5f9;
+        --muted-foreground: #64748b;
+        --border: #e2e8f0;
+        --border-color-default: #e2efe2;
     }
 
+    /* 2. Dark Theme */
     .dark {
-        --background: 240 10% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 240 10% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 240 10% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 24 100% 50%; /* Orange-500 */
-        --primary-foreground: 240 5.9% 10%;
-        --secondary: 240 3.7% 15.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 240 3.7% 15.9%;
-        --muted-foreground: 240 5% 64.9%;
-        --accent: 240 3.7% 15.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 240 3.7% 15.9%;
-        --input: 240 3.7% 15.9%;
-        --ring: 24 100% 50%; /* Orange-500 */
+        --background: #020817;
+        --foreground: #f8fafc;
+        --card: #0f172a;
+        /* ...and so on for all dark mode variables */
+    }
+
+    /* 3. Accent Themes */
+    .theme-green {
+        --primary: #16a34a;
+        --primary-foreground: #f0fdf4;
+    }
+    .dark.theme-green {
+        --primary: #22c55e;
+        --primary-foreground: #052e16;
     }
 }
 
-@layer base {
-    * {
-        @apply border-border;
-    }
-    body {
-        @apply bg-background text-foreground;
-    }
-}
-
-/* Custom scrollbar styles */
-::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #ea580c;
-    border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: #c2410c;
-}
-
-/* Mobile-first responsive utilities */
-@media (max-width: 768px) {
-    .mobile-padding {
-        @apply px-4 py-2;
-    }
-}
-
-/* Fitness-themed animations */
-@keyframes pulse-orange {
-    0%,
-    100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.7;
-    }
-}
-
-.pulse-orange {
-    animation: pulse-orange 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-/* Custom button styles for gym theme */
-.gym-button {
-    @apply bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 transform hover:scale-105;
-}
-
-.gym-button-outline {
-    @apply border-2 border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200;
-}
+@import "tailwindcss";
