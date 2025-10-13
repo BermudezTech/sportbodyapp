@@ -8,11 +8,7 @@ import { Settings } from "lucide-react";
 import { QrCode } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-function AdminDashboard({
-    setCurrentView,
-}: {
-    setCurrentView: (view: string) => void;
-}) {
+function AdminDashboard() {
     return (
         <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">

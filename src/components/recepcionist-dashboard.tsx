@@ -8,11 +8,7 @@ import { QrCode } from "lucide-react";
 import { CardDescription } from "@/components/ui/card";
 import { Key, CreditCard } from "lucide-react";
 
-function ReceptionistDashboard({
-    setCurrentView,
-}: {
-    setCurrentView: (view: string) => void;
-}) {
+function ReceptionistDashboard() {
     return (
         <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -191,9 +187,6 @@ function ReceptionistDashboard({
                         <Button
                             variant="outline"
                             className="h-20 flex-col gap-2 bg-transparent"
-                            onClick={() =>
-                                setCurrentView("membership-management")
-                            }
                         >
                             <Users className="h-6 w-6" />
                             <span className="text-sm">Nuevo miembro</span>
@@ -208,7 +201,6 @@ function ReceptionistDashboard({
                         <Button
                             variant="outline"
                             className="h-20 flex-col gap-2 bg-transparent"
-                            onClick={() => setCurrentView("billing-payment")}
                         >
                             <CreditCard className="h-6 w-6" />
                             <span className="text-sm">Procesar pago</span>

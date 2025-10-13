@@ -62,13 +62,7 @@ function App() {
                 />
                 <Route
                     path="/dashboard"
-                    element={
-                        <DashboardContent
-                            userRole={user.role}
-                            currentView="dashboard"
-                            setCurrentView={() => {}}
-                        />
-                    }
+                    element={<DashboardContent userRole={user.role} />}
                 />
                 <Route
                     path="/membership-management"

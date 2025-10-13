@@ -3,26 +3,18 @@ import MedicalDashboard from "./medical-dashboard";
 import MemberDashboard from "./member-dashboard";
 import ReceptionistDashboard from "./recepcionist-dashboard";
 
-function DashboardContent({
-    userRole,
-    currentView,
-    setCurrentView,
-}: {
-    userRole: string;
-    currentView: string;
-    setCurrentView: (view: string) => void;
-}) {
+function DashboardContent({ userRole }: { userRole: string }) {
     switch (userRole) {
         case "Member":
-            return <MemberDashboard setCurrentView={setCurrentView} />;
+            return <MemberDashboard />;
         case "Receptionist":
-            return <ReceptionistDashboard setCurrentView={setCurrentView} />;
+            return <ReceptionistDashboard />;
         case "Medical Staff":
-            return <MedicalDashboard setCurrentView={setCurrentView} />;
+            return <MedicalDashboard />;
         case "Administrator":
-            return <AdminDashboard setCurrentView={setCurrentView} />;
+            return <AdminDashboard />;
         default:
-            return <MemberDashboard setCurrentView={setCurrentView} />;
+            return <MemberDashboard />;
     }
 }
 
