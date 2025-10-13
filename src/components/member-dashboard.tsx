@@ -5,6 +5,7 @@ import { QrCode } from "lucide-react";
 import { CardDescription } from "@/components/ui/card";
 import { Dumbbell } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { NavLink } from "react-router";
 
 function MemberDashboard({
     setCurrentView,
@@ -129,14 +130,11 @@ function MemberDashboard({
                                     Press de banca - 3 series x 12 repeticiones
                                 </div>
                             </div>
-                            <Button
-                                className="w-full bg-orange-500 hover:bg-orange-600"
-                                onClick={() =>
-                                    setCurrentView("workout-progress")
-                                }
-                            >
-                                Continuar entrenamiento
-                            </Button>
+                            <NavLink to="/workout-progress">
+                                <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                                    Continuar entrenamiento
+                                </Button>
+                            </NavLink>
                         </div>
                     </CardContent>
                 </Card>

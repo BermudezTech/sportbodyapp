@@ -124,39 +124,35 @@ export default function MembershipManagement() {
         <div className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                    <Label htmlFor="firstName">First Name *</Label>
-                    <Input id="firstName" placeholder="Enter first name" />
+                    <Label htmlFor="firstName">Nombre *</Label>
+                    <Input id="firstName" placeholder="Nombre" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="lastName">Last Name *</Label>
-                    <Input id="lastName" placeholder="Enter last name" />
+                    <Label htmlFor="lastName">Apellido *</Label>
+                    <Input id="lastName" placeholder="Apellido" />
                 </div>
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="email">Email Address *</Label>
-                <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter email address"
-                />
+                <Label htmlFor="email">Email *</Label>
+                <Input id="email" type="email" placeholder="Email" />
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="phone">Phone Number *</Label>
-                <Input id="phone" placeholder="+1 (555) 123-4567" />
+                <Label htmlFor="phone">Telefono *</Label>
+                <Input id="phone" placeholder="Telefono" />
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="birthdate">Date of Birth *</Label>
+                <Label htmlFor="birthdate">Fecha de Nacimiento *</Label>
                 <Input id="birthdate" type="date" />
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="membershipType">Membership Type *</Label>
+                <Label htmlFor="membershipType">Tipo de Membresia *</Label>
                 <Select>
                     <SelectTrigger>
-                        <SelectValue placeholder="Select membership type" />
+                        <SelectValue placeholder="Seleccionar Tipo de Membresia" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="basic">Basic - $49/month</SelectItem>
@@ -171,10 +167,10 @@ export default function MembershipManagement() {
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="emergencyContact">Emergency Contact</Label>
+                <Label htmlFor="emergencyContact">Contacto de emergencia</Label>
                 <Input
                     id="emergencyContact"
-                    placeholder="Emergency contact name and phone"
+                    placeholder="Contacto de emergencia"
                 />
             </div>
 
@@ -182,24 +178,25 @@ export default function MembershipManagement() {
                 <div className="flex items-center gap-2 mb-2">
                     <QrCode className="h-5 w-5 text-orange-600" />
                     <span className="font-medium text-orange-800">
-                        QR Code Generation
+                        Generacion de QR
                     </span>
                 </div>
                 <p className="text-sm text-orange-700">
-                    A unique QR code will be automatically generated upon member
-                    registration for gym access control.
+                    Un codigo QR unico sera generado automaticamente al momento
+                    de la inscripcion del miembro para el control de acceso al
+                    gimnasio.
                 </p>
             </div>
 
             <div className="flex gap-2 pt-4">
                 <Button className="flex-1 bg-orange-500 hover:bg-orange-600">
-                    Register Member
+                    Registrar Afiliado
                 </Button>
                 <Button
                     variant="outline"
                     onClick={() => setIsNewMemberDialogOpen(false)}
                 >
-                    Cancel
+                    Cancelar
                 </Button>
             </div>
         </div>
@@ -211,10 +208,10 @@ export default function MembershipManagement() {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900">
-                        Membership Management
+                        Gestionar Afiliados
                     </h1>
                     <p className="text-gray-600">
-                        Manage member registrations and information
+                        Gestión de registro de afiliados e información
                     </p>
                 </div>
                 <Button
@@ -224,7 +221,7 @@ export default function MembershipManagement() {
                     }
                 >
                     <Plus className="h-4 w-4 mr-2" />
-                    {isNewMemberDialogOpen ? "Cancel" : "New Member"}
+                    {isNewMemberDialogOpen ? "Cancelar" : "Nuevo Afiliado"}
                 </Button>
             </div>
 
@@ -232,10 +229,10 @@ export default function MembershipManagement() {
             {isNewMemberDialogOpen && (
                 <Card className="mb-6 border-2 border-orange-500">
                     <CardHeader>
-                        <CardTitle>Register New Member</CardTitle>
+                        <CardTitle>Registro de nuevo afiliado</CardTitle>
                         <CardDescription>
-                            Fill in the member information to create a new gym
-                            membership.
+                            Llenar la información del miembro para crear un
+                            nuevo miembro.
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -249,25 +246,29 @@ export default function MembershipManagement() {
                 <Card className="border-l-4 border-l-orange-500">
                     <CardContent className="p-4">
                         <div className="text-2xl font-bold">1,247</div>
-                        <p className="text-sm text-gray-600">Total Members</p>
+                        <p className="text-sm text-gray-600">Total Afiliados</p>
                     </CardContent>
                 </Card>
                 <Card className="border-l-4 border-l-green-500">
                     <CardContent className="p-4">
                         <div className="text-2xl font-bold">1,189</div>
-                        <p className="text-sm text-gray-600">Active Members</p>
+                        <p className="text-sm text-gray-600">
+                            Afiliados Activos
+                        </p>
                     </CardContent>
                 </Card>
                 <Card className="border-l-4 border-l-yellow-500">
                     <CardContent className="p-4">
                         <div className="text-2xl font-bold">43</div>
-                        <p className="text-sm text-gray-600">Expiring Soon</p>
+                        <p className="text-sm text-gray-600">
+                            Expirando Pronto
+                        </p>
                     </CardContent>
                 </Card>
                 <Card className="border-l-4 border-l-red-500">
                     <CardContent className="p-4">
                         <div className="text-2xl font-bold">15</div>
-                        <p className="text-sm text-gray-600">Expired</p>
+                        <p className="text-sm text-gray-600">Expirados</p>
                     </CardContent>
                 </Card>
             </div>
@@ -279,7 +280,7 @@ export default function MembershipManagement() {
                         <div className="flex-1 relative">
                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                             <Input
-                                placeholder="Search by name, email, or member ID..."
+                                placeholder="Buscar por nombre, correo electrónico o ID de miembro..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="pl-10"
@@ -294,17 +295,21 @@ export default function MembershipManagement() {
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="all">All Status</SelectItem>
-                                <SelectItem value="active">Active</SelectItem>
-                                <SelectItem value="expired">Expired</SelectItem>
+                                <SelectItem value="all">
+                                    Todos los estados
+                                </SelectItem>
+                                <SelectItem value="active">Activo</SelectItem>
+                                <SelectItem value="expired">
+                                    Expirado
+                                </SelectItem>
                                 <SelectItem value="suspended">
-                                    Suspended
+                                    Suspendido
                                 </SelectItem>
                             </SelectContent>
                         </Select>
                         <Button variant="outline">
                             <Download className="h-4 w-4 mr-2" />
-                            Export
+                            Exportar
                         </Button>
                     </div>
                 </CardContent>
@@ -313,25 +318,25 @@ export default function MembershipManagement() {
             {/* Members Table */}
             <Card>
                 <CardHeader>
-                    <CardTitle>Members ({filteredMembers.length})</CardTitle>
+                    <CardTitle>Afiliados ({filteredMembers.length})</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="overflow-x-auto">
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>Member</TableHead>
+                                    <TableHead>Afiliado</TableHead>
                                     <TableHead className="hidden md:table-cell">
-                                        Contact
+                                        Contacto
                                     </TableHead>
                                     <TableHead className="hidden lg:table-cell">
-                                        Membership
+                                        Miembro
                                     </TableHead>
-                                    <TableHead>Status</TableHead>
+                                    <TableHead>Estado</TableHead>
                                     <TableHead className="hidden lg:table-cell">
-                                        Expiry
+                                        Expiración
                                     </TableHead>
-                                    <TableHead>Actions</TableHead>
+                                    <TableHead>Acciones</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -446,9 +451,12 @@ export default function MembershipManagement() {
             <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
-                        <DialogTitle>Edit Member Information</DialogTitle>
+                        <DialogTitle>
+                            Editar Información del Afiliado
+                        </DialogTitle>
                         <DialogDescription>
-                            Update member details and membership information.
+                            Actualizar detalles del miembro y la información de
+                            la membresía.
                         </DialogDescription>
                     </DialogHeader>
                     {selectedMember && (
@@ -456,7 +464,7 @@ export default function MembershipManagement() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="editFirstName">
-                                        First Name
+                                        Nombre
                                     </Label>
                                     <Input
                                         id="editFirstName"
@@ -467,7 +475,7 @@ export default function MembershipManagement() {
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="editLastName">
-                                        Last Name
+                                        Apellido
                                     </Label>
                                     <Input
                                         id="editLastName"
@@ -478,14 +486,18 @@ export default function MembershipManagement() {
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="editEmail">Email Address</Label>
+                                <Label htmlFor="editEmail">
+                                    Correo Electrónico
+                                </Label>
                                 <Input
                                     id="editEmail"
                                     defaultValue={selectedMember.email}
                                 />
                             </div>
                             <div className="space-y-2">
-                                <Label htmlFor="editPhone">Phone Number</Label>
+                                <Label htmlFor="editPhone">
+                                    Número de Teléfono
+                                </Label>
                                 <Input
                                     id="editPhone"
                                     defaultValue={selectedMember.phone}
@@ -493,7 +505,7 @@ export default function MembershipManagement() {
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="editMembershipType">
-                                    Membership Type
+                                    Tipo de Membresía
                                 </Label>
                                 <Select
                                     defaultValue={selectedMember.membershipType.toLowerCase()}
@@ -503,26 +515,26 @@ export default function MembershipManagement() {
                                     </SelectTrigger>
                                     <SelectContent>
                                         <SelectItem value="basic">
-                                            Basic - $49/month
+                                            Básico - $49/mes
                                         </SelectItem>
                                         <SelectItem value="standard">
-                                            Standard - $69/month
+                                            Standard - $69/mes
                                         </SelectItem>
                                         <SelectItem value="premium">
-                                            Premium - $89/month
+                                            Premium - $89/mes
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>
                             <div className="flex gap-2 pt-4">
                                 <Button className="flex-1 bg-orange-500 hover:bg-orange-600">
-                                    Update Member
+                                    Actualizar Afiliado
                                 </Button>
                                 <Button
                                     variant="outline"
                                     onClick={() => setIsEditDialogOpen(false)}
                                 >
-                                    Cancel
+                                    Cancelar
                                 </Button>
                             </div>
                         </div>

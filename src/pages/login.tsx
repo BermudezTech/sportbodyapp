@@ -21,6 +21,7 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { useNavigate } from "react-router";
+import Footer from "@/components/layout/Footer";
 
 // Mock user credentials for demo
 const mockUsers = {
@@ -80,7 +81,13 @@ const errorMessages = {
     },
 };
 
-export default function LoginPage() {
+export default function LoginPage({
+    setUser,
+    users,
+}: {
+    setUser: (user: any) => void;
+    users: any[];
+}) {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: "",
@@ -236,7 +243,7 @@ export default function LoginPage() {
                                     <Input
                                         id="email"
                                         type="email"
-                                        placeholder="Enter your email"
+                                        placeholder="Ingrese su correo electrónico"
                                         value={formData.email}
                                         onChange={(e) =>
                                             handleInputChange(
@@ -260,7 +267,7 @@ export default function LoginPage() {
                                         type={
                                             showPassword ? "text" : "password"
                                         }
-                                        placeholder="Enter your password"
+                                        placeholder="Ingrese su contraseña"
                                         value={formData.password}
                                         onChange={(e) =>
                                             handleInputChange(
@@ -343,7 +350,16 @@ export default function LoginPage() {
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    onClick={() => fillDemoCredentials("admin")}
+                                    onClick={() => {
+                                        fillDemoCredentials("admin");
+                                        setUser(
+                                            users.find(
+                                                (user) =>
+                                                    user.role ===
+                                                    "Administrator"
+                                            )
+                                        );
+                                    }}
                                     className="text-xs"
                                 >
                                     Administrador
@@ -351,9 +367,15 @@ export default function LoginPage() {
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    onClick={() =>
-                                        fillDemoCredentials("receptionist")
-                                    }
+                                    onClick={() => {
+                                        fillDemoCredentials("receptionist");
+                                        setUser(
+                                            users.find(
+                                                (user) =>
+                                                    user.role === "Receptionist"
+                                            )
+                                        );
+                                    }}
                                     className="text-xs"
                                 >
                                     Receptionista
@@ -361,9 +383,16 @@ export default function LoginPage() {
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    onClick={() =>
-                                        fillDemoCredentials("medical")
-                                    }
+                                    onClick={() => {
+                                        fillDemoCredentials("medical");
+                                        setUser(
+                                            users.find(
+                                                (user) =>
+                                                    user.role ===
+                                                    "Medical Staff"
+                                            )
+                                        );
+                                    }}
                                     className="text-xs"
                                 >
                                     Personal Medico
@@ -371,9 +400,14 @@ export default function LoginPage() {
                                 <Button
                                     variant="outline"
                                     size="sm"
-                                    onClick={() =>
-                                        fillDemoCredentials("member")
-                                    }
+                                    onClick={() => {
+                                        fillDemoCredentials("member");
+                                        setUser(
+                                            users.find(
+                                                (user) => user.role === "Member"
+                                            )
+                                        );
+                                    }}
                                     className="text-xs"
                                 >
                                     Miembro
@@ -383,19 +417,7 @@ export default function LoginPage() {
                     </CardContent>
                 </Card>
 
-                {/* Footer */}
-                <div className="text-center mt-6 text-sm text-gray-500">
-                    <p>© 2024 Sport Body Gym. All rights reserved.</p>
-                    <p className="mt-1">
-                        Necesita ayuda?{" "}
-                        <Button
-                            variant="link"
-                            className="px-1 text-orange-600 hover:text-orange-700 text-sm"
-                        >
-                            support@sportbodygym.com
-                        </Button>
-                    </p>
-                </div>
+                <Footer />
             </div>
 
             {/* Error Modal */}

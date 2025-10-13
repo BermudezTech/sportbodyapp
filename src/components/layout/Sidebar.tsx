@@ -17,14 +17,16 @@ export default function Sidebar({ navigationItems, user }: any) {
                 <nav className="flex-1 p-4">
                     <div className="space-y-2">
                         {navigationItems.map((item: any) => (
-                            <Button
-                                key={item.id}
-                                variant="ghost"
-                                className="w-full justify-start text-white hover:bg-orange-500 hover:text-white"
-                            >
-                                <item.icon className="mr-3 h-5 w-5" />
-                                {item.label}
-                            </Button>
+                            <NavLink to={item.to}>
+                                <Button
+                                    key={item.id}
+                                    variant="ghost"
+                                    className="w-full justify-start text-white hover:bg-orange-500 hover:text-white"
+                                >
+                                    <item.icon className="mr-3 h-5 w-5" />
+                                    {item.label}
+                                </Button>
+                            </NavLink>
                         ))}
                     </div>
                 </nav>
@@ -35,7 +37,10 @@ export default function Sidebar({ navigationItems, user }: any) {
                             <AvatarImage
                                 src={user?.avatar || "/placeholder.svg"}
                             />
-                            <AvatarFallback>{user.name}</AvatarFallback>
+                            <AvatarFallback>
+                                {user?.name.split(" ")[0][0] +
+                                    user?.name.split(" ")[1][0] || ""}
+                            </AvatarFallback>
                         </Avatar>
                         <div>
                             <p className="font-medium text-white">

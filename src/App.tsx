@@ -6,6 +6,9 @@ import DashboardContent from "@/components/dashboard-content";
 // import WorkoutPage from "@/pages/WorkoutPage";
 import LoginPage from "@/pages/login";
 import { useState } from "react";
+import MembershipManagement from "./components/membership-management";
+import BillingPayment from "./components/billing-payment";
+import WorkoutInProgress from "./components/workout-in-progress";
 
 const users = [
     {
@@ -44,7 +47,10 @@ function App() {
     return (
         <Routes>
             {/* Login */}
-            <Route path="/login" element={<LoginPage />} />
+            <Route
+                path="/login"
+                element={<LoginPage setUser={setUser} users={users} />}
+            />
 
             {/* Rutas con layout del dashboard */}
             <Route
@@ -64,9 +70,15 @@ function App() {
                         />
                     }
                 />
-                {/* <Route path="/membership" element={<MembershipPage />} /> */}
-                {/* <Route path="/billing" element={<BillingPage />} /> */}
-                {/* <Route path="/workouts" element={<WorkoutPage />} /> */}
+                <Route
+                    path="/membership-management"
+                    element={<MembershipManagement />}
+                />
+                <Route path="/billing" element={<BillingPayment />} />
+                <Route
+                    path="/workout-progress"
+                    element={<WorkoutInProgress />}
+                />
                 {/* 404 route */}
                 <Route path="*" element={<Navigate to="/login" />} />
             </Route>

@@ -59,8 +59,8 @@ const mockPayments = [
         amount: 89,
         dueDate: "2024-12-01",
         paidDate: "2024-11-28",
-        status: "Paid",
-        method: "Credit Card",
+        status: "Pagado",
+        method: "Tarjeta de credito",
         invoiceNumber: "INV-2024-001",
         avatar: "/placeholder.svg?height=40&width=40",
     },
@@ -72,7 +72,7 @@ const mockPayments = [
         amount: 49,
         dueDate: "2024-12-15",
         paidDate: null,
-        status: "Overdue",
+        status: "Pendiente",
         method: null,
         invoiceNumber: "INV-2024-002",
         avatar: "/placeholder.svg?height=40&width=40",
@@ -85,7 +85,7 @@ const mockPayments = [
         amount: 89,
         dueDate: "2024-12-20",
         paidDate: null,
-        status: "Pending",
+        status: "Pendiente",
         method: null,
         invoiceNumber: "INV-2024-003",
         avatar: "/placeholder.svg?height=40&width=40",
@@ -98,8 +98,8 @@ const mockPayments = [
         amount: 69,
         dueDate: "2024-11-30",
         paidDate: "2024-11-29",
-        status: "Paid",
-        method: "Bank Transfer",
+        status: "Pagado",
+        method: "Transferencia bancaria",
         invoiceNumber: "INV-2024-004",
         avatar: "/placeholder.svg?height=40&width=40",
     },
@@ -111,7 +111,7 @@ const mockPayments = [
         amount: 89,
         dueDate: "2024-12-25",
         paidDate: null,
-        status: "Pending",
+        status: "Pendiente",
         method: null,
         invoiceNumber: "INV-2024-005",
         avatar: "/placeholder.svg?height=40&width=40",
@@ -141,25 +141,25 @@ export default function BillingPayment() {
     });
 
     const totalRevenue = mockPayments
-        .filter((p) => p.status === "Paid")
+        .filter((p) => p.status === "Pagado")
         .reduce((sum, p) => sum + p.amount, 0);
     const pendingAmount = mockPayments
-        .filter((p) => p.status === "Pending")
+        .filter((p) => p.status === "Pendiente")
         .reduce((sum, p) => sum + p.amount, 0);
     const overdueAmount = mockPayments
-        .filter((p) => p.status === "Overdue")
+        .filter((p) => p.status === "Atrasado")
         .reduce((sum, p) => sum + p.amount, 0);
     const overdueCount = mockPayments.filter(
-        (p) => p.status === "Overdue"
+        (p) => p.status === "Atrasado"
     ).length;
 
     const getStatusColor = (status: string) => {
         switch (status.toLowerCase()) {
-            case "paid":
+            case "pagado":
                 return "bg-green-500 hover:bg-green-600";
-            case "pending":
+            case "pendiente":
                 return "bg-yellow-500 hover:bg-yellow-600";
-            case "overdue":
+            case "atrasado":
                 return "bg-red-500 hover:bg-red-600";
             default:
                 return "bg-gray-500 hover:bg-gray-600";
@@ -169,10 +169,10 @@ export default function BillingPayment() {
     const NewPaymentForm = () => (
         <div className="space-y-4">
             <div className="space-y-2">
-                <Label htmlFor="paymentMember">Select Member *</Label>
+                <Label htmlFor="paymentMember">Seleccionar Afiliado *</Label>
                 <Select>
                     <SelectTrigger>
-                        <SelectValue placeholder="Search and select member" />
+                        <SelectValue placeholder="Seleccionar Afiliado" />
                     </SelectTrigger>
                     <SelectContent>
                         <SelectItem value="M001">
@@ -193,7 +193,7 @@ export default function BillingPayment() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                    <Label htmlFor="paymentAmount">Amount *</Label>
+                    <Label htmlFor="paymentAmount">Monto *</Label>
                     <Input
                         id="paymentAmount"
                         type="number"
@@ -201,26 +201,30 @@ export default function BillingPayment() {
                     />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="paymentMethod">Payment Method *</Label>
+                    <Label htmlFor="paymentMethod">Metodo de pago *</Label>
                     <Select>
                         <SelectTrigger>
-                            <SelectValue placeholder="Select method" />
+                            <SelectValue placeholder="Seleccionar metodo de pago" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="cash">Cash</SelectItem>
-                            <SelectItem value="credit">Credit Card</SelectItem>
-                            <SelectItem value="debit">Debit Card</SelectItem>
-                            <SelectItem value="transfer">
-                                Bank Transfer
+                            <SelectItem value="cash">Efectivo</SelectItem>
+                            <SelectItem value="credit">
+                                Tarjeta de credito
                             </SelectItem>
-                            <SelectItem value="check">Check</SelectItem>
+                            <SelectItem value="debit">
+                                Tarjeta de debito
+                            </SelectItem>
+                            <SelectItem value="transfer">
+                                Transferencia bancaria
+                            </SelectItem>
+                            <SelectItem value="check">Cheque</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="paymentDate">Payment Date *</Label>
+                <Label htmlFor="paymentDate">Fecha de pago *</Label>
                 <Input
                     id="paymentDate"
                     type="date"
@@ -229,10 +233,10 @@ export default function BillingPayment() {
             </div>
 
             <div className="space-y-2">
-                <Label htmlFor="paymentNotes">Notes (Optional)</Label>
+                <Label htmlFor="paymentNotes">Notas (Opcional)</Label>
                 <Textarea
                     id="paymentNotes"
-                    placeholder="Additional payment notes..."
+                    placeholder="Notas adicionales..."
                 />
             </div>
 
@@ -240,24 +244,24 @@ export default function BillingPayment() {
                 <div className="flex items-center gap-2 mb-2">
                     <Receipt className="h-5 w-5 text-orange-600" />
                     <span className="font-medium text-orange-800">
-                        Invoice Generation
+                        Generacion de factura
                     </span>
                 </div>
                 <p className="text-sm text-orange-700">
-                    An invoice/receipt will be automatically generated and can
-                    be printed or emailed to the member.
+                    Una factura/recepcion se generara automaticamente y puede
+                    ser impresa o enviada por correo electronico al miembro.
                 </p>
             </div>
 
             <div className="flex gap-2 pt-4">
                 <Button className="flex-1 bg-orange-500 hover:bg-orange-600">
-                    Process Payment
+                    Procesar Pago
                 </Button>
                 <Button
                     variant="outline"
                     onClick={() => setIsNewPaymentDialogOpen(false)}
                 >
-                    Cancel
+                    Cancelar
                 </Button>
             </div>
         </div>
@@ -270,27 +274,29 @@ export default function BillingPayment() {
                 <h2 className="text-2xl font-bold text-orange-600">
                     Sport Body Gym
                 </h2>
-                <p className="text-gray-600">Payment Receipt</p>
+                <p className="text-gray-600">Recibo de pago</p>
             </div>
 
             {/* Receipt Details */}
             <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                    <p className="font-medium text-gray-600">Receipt Number:</p>
+                    <p className="font-medium text-gray-600">
+                        Numero de Recibo:
+                    </p>
                     <p className="font-bold">{payment.invoiceNumber}</p>
                 </div>
                 <div>
-                    <p className="font-medium text-gray-600">Date:</p>
+                    <p className="font-medium text-gray-600">Fecha:</p>
                     <p className="font-bold">
                         {payment.paidDate || new Date().toLocaleDateString()}
                     </p>
                 </div>
                 <div>
-                    <p className="font-medium text-gray-600">Member ID:</p>
+                    <p className="font-medium text-gray-600">ID de miembro:</p>
                     <p className="font-bold">{payment.memberId}</p>
                 </div>
                 <div>
-                    <p className="font-medium text-gray-600">Payment Method:</p>
+                    <p className="font-medium text-gray-600">Metodo de pago:</p>
                     <p className="font-bold">{payment.method || "Cash"}</p>
                 </div>
             </div>
@@ -298,7 +304,7 @@ export default function BillingPayment() {
             {/* Member Details */}
             <div className="border-t pt-4">
                 <h3 className="font-medium text-gray-600 mb-2">
-                    Member Information:
+                    Informacion del miembro:
                 </h3>
                 <div className="flex items-center gap-3">
                     <Avatar className="h-12 w-12">
@@ -315,7 +321,7 @@ export default function BillingPayment() {
                     <div>
                         <p className="font-bold">{payment.memberName}</p>
                         <p className="text-sm text-gray-600">
-                            {payment.membershipType} Membership
+                            {payment.membershipType} Miembro
                         </p>
                     </div>
                 </div>
@@ -325,30 +331,30 @@ export default function BillingPayment() {
             <div className="border-t pt-4">
                 <div className="flex justify-between items-center mb-2">
                     <span className="font-medium">
-                        Membership Fee ({payment.membershipType}):
+                        Pago de membresia ({payment.membershipType}):
                     </span>
                     <span className="font-bold">${payment.amount}</span>
                 </div>
                 <div className="flex justify-between items-center text-lg font-bold border-t pt-2">
-                    <span>Total Amount:</span>
+                    <span>Total:</span>
                     <span className="text-orange-600">${payment.amount}</span>
                 </div>
             </div>
 
             {/* Footer */}
             <div className="border-t pt-4 text-center text-sm text-gray-600">
-                <p>Thank you for your payment!</p>
-                <p>For questions, contact us at (555) 123-4567</p>
+                <p>Gracias por su pago!</p>
+                <p>Para preguntas, contactenos en (555) 123-4567</p>
             </div>
 
             <div className="flex gap-2">
                 <Button className="flex-1 bg-orange-500 hover:bg-orange-600">
                     <Download className="h-4 w-4 mr-2" />
-                    Download PDF
+                    Descargar PDF
                 </Button>
                 <Button variant="outline">
                     <Receipt className="h-4 w-4 mr-2" />
-                    Print Receipt
+                    Imprimir Recibo
                 </Button>
             </div>
         </div>
@@ -360,10 +366,10 @@ export default function BillingPayment() {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900">
-                        Billing & Payments
+                        Pagos & Facturación
                     </h1>
                     <p className="text-gray-600">
-                        Manage member payments and billing
+                        Gestione los pagos y facturación de los miembros
                     </p>
                 </div>
                 <Button
@@ -373,7 +379,7 @@ export default function BillingPayment() {
                     }
                 >
                     <Plus className="h-4 w-4 mr-2" />
-                    {isNewPaymentDialogOpen ? "Cancel" : "New Payment"}
+                    {isNewPaymentDialogOpen ? "Cancelar" : "Nuevo Pago"}
                 </Button>
             </div>
 
@@ -381,10 +387,10 @@ export default function BillingPayment() {
             {isNewPaymentDialogOpen && (
                 <Card className="mb-6 border-2 border-orange-500">
                     <CardHeader>
-                        <CardTitle>Process New Payment</CardTitle>
+                        <CardTitle>Procesar nuevo pago</CardTitle>
                         <CardDescription>
-                            Record a new payment and generate receipt for
-                            member.
+                            Registre un nuevo pago y genere un recibo para el
+                            miembro.
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -403,7 +409,7 @@ export default function BillingPayment() {
                                     ${totalRevenue}
                                 </div>
                                 <p className="text-sm text-gray-600">
-                                    Total Revenue
+                                    Total de ingresos
                                 </p>
                             </div>
                             <DollarSign className="h-8 w-8 text-green-500" />
@@ -418,7 +424,7 @@ export default function BillingPayment() {
                                     ${pendingAmount}
                                 </div>
                                 <p className="text-sm text-gray-600">
-                                    Pending Payments
+                                    Pagos pendientes
                                 </p>
                             </div>
                             <Clock className="h-8 w-8 text-yellow-500" />
@@ -433,7 +439,7 @@ export default function BillingPayment() {
                                     ${overdueAmount}
                                 </div>
                                 <p className="text-sm text-gray-600">
-                                    Overdue Amount
+                                    Pagos vencidos
                                 </p>
                             </div>
                             <AlertTriangle className="h-8 w-8 text-red-500" />
@@ -448,7 +454,7 @@ export default function BillingPayment() {
                                     {overdueCount}
                                 </div>
                                 <p className="text-sm text-gray-600">
-                                    Overdue Accounts
+                                    Cuentas vencidas
                                 </p>
                             </div>
                             <User className="h-8 w-8 text-orange-500" />
@@ -464,7 +470,7 @@ export default function BillingPayment() {
                         <div className="flex-1 relative">
                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                             <Input
-                                placeholder="Search by member name, ID, or invoice number..."
+                                placeholder="Buscar por nombre, ID o número de factura..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                                 className="pl-10"
@@ -479,15 +485,19 @@ export default function BillingPayment() {
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="all">All Status</SelectItem>
-                                <SelectItem value="paid">Paid</SelectItem>
-                                <SelectItem value="pending">Pending</SelectItem>
-                                <SelectItem value="overdue">Overdue</SelectItem>
+                                <SelectItem value="all">Todos</SelectItem>
+                                <SelectItem value="paid">Pagados</SelectItem>
+                                <SelectItem value="pending">
+                                    Pendientes
+                                </SelectItem>
+                                <SelectItem value="overdue">
+                                    Vencidos
+                                </SelectItem>
                             </SelectContent>
                         </Select>
                         <Button variant="outline">
                             <Download className="h-4 w-4 mr-2" />
-                            Export
+                            Exportar
                         </Button>
                     </div>
                 </CardContent>
@@ -497,7 +507,7 @@ export default function BillingPayment() {
             <Card>
                 <CardHeader>
                     <CardTitle>
-                        Payment Records ({filteredPayments.length})
+                        Registros de pagos ({filteredPayments.length})
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -505,19 +515,19 @@ export default function BillingPayment() {
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>Member</TableHead>
+                                    <TableHead>Afiliado</TableHead>
                                     <TableHead className="hidden md:table-cell">
-                                        Membership
+                                        Membresía
                                     </TableHead>
-                                    <TableHead>Amount</TableHead>
+                                    <TableHead>Importe</TableHead>
                                     <TableHead className="hidden lg:table-cell">
-                                        Due Date
+                                        Fecha de vencimiento
                                     </TableHead>
-                                    <TableHead>Status</TableHead>
+                                    <TableHead>Estado</TableHead>
                                     <TableHead className="hidden lg:table-cell">
-                                        Method
+                                        Metodo
                                     </TableHead>
-                                    <TableHead>Actions</TableHead>
+                                    <TableHead>Acciones</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -636,9 +646,10 @@ export default function BillingPayment() {
             >
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
-                        <DialogTitle>Payment Receipt</DialogTitle>
+                        <DialogTitle>Recibo de pago</DialogTitle>
                         <DialogDescription>
-                            Receipt details for {selectedPayment?.memberName}
+                            Detalles del recibo para{" "}
+                            {selectedPayment?.memberName}
                         </DialogDescription>
                     </DialogHeader>
                     {selectedPayment && (

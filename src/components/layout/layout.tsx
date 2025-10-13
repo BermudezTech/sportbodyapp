@@ -14,6 +14,7 @@ import {
     BarChart3,
     Settings,
 } from "lucide-react";
+import Footer from "./Footer";
 
 export default function Layout({
     user,
@@ -28,7 +29,14 @@ export default function Layout({
     const [navigationItems, setNavigationItems] = useState<any>([]);
 
     const getNavigationItems = (role: string) => {
-        const baseItems = [{ icon: Home, label: "Dashboard", id: "dashboard" }];
+        const baseItems = [
+            {
+                icon: Home,
+                label: "Dashboard",
+                id: "dashboard",
+                to: "/dashboard",
+            },
+        ];
 
         switch (role) {
             case "Member":
@@ -47,19 +55,29 @@ export default function Layout({
             case "Receptionist":
                 return [
                     ...baseItems,
-                    { icon: Users, label: "Miembros", id: "members" },
+                    {
+                        icon: Users,
+                        label: "Afiliados",
+                        id: "members",
+                        to: "/membership-management",
+                    },
                     {
                         icon: QrCode,
                         label: "Control de acceso",
                         id: "access-control",
                     },
                     { icon: Key, label: "Locker", id: "locker" },
-                    { icon: CreditCard, label: "Pagos", id: "billing" },
+                    {
+                        icon: CreditCard,
+                        label: "Pagos",
+                        id: "billing",
+                        to: "/billing",
+                    },
                 ];
             case "Medical Staff":
                 return [
                     ...baseItems,
-                    { icon: Users, label: "Miembros", id: "members" },
+                    { icon: Users, label: "Afiliados", id: "members" },
                     {
                         icon: Dumbbell,
                         label: "Planes de entrenamiento",
@@ -105,6 +123,7 @@ export default function Layout({
                 <main className="p-4 md:p-6">
                     <Outlet />
                 </main>
+                <Footer />
             </div>
         </div>
     );

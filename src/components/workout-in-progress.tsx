@@ -23,33 +23,34 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+import { NavLink } from "react-router";
 
 // Mock workout data
 const workoutPlan = {
-    name: "Upper Body Strength",
-    duration: "45 minutes",
+    name: "Entrenamiento de fuerza",
+    duration: "45 minutos",
     exercises: [
         {
             id: 1,
-            name: "Bench Press",
+            name: "Press de banca",
             sets: 3,
             reps: 12,
             weight: "135 lbs",
             restTime: 90,
             instructions:
-                "Keep your back flat on the bench. Lower the bar to your chest and press up explosively.",
+                "Mantén tu espalda recta en la banca. Baja el barra hasta tu pecho y presiona explosivamente.",
             completed: true,
             currentSet: 3,
         },
         {
             id: 2,
-            name: "Incline Dumbbell Press",
+            name: "Press de banca inclinada",
             sets: 3,
             reps: 10,
-            weight: "45 lbs each",
+            weight: "45 lbs cada una",
             restTime: 90,
             instructions:
-                "Set bench to 45-degree incline. Press dumbbells up and together at the top.",
+                "Coloca la banca a 45 grados. Presiona las mancuernas hacia arriba y juntas en el techo.",
             completed: true,
             currentSet: 3,
         },
@@ -58,34 +59,34 @@ const workoutPlan = {
             name: "Pull-ups",
             sets: 3,
             reps: 8,
-            weight: "Body weight",
+            weight: "Peso corporal",
             restTime: 120,
             instructions:
-                "Hang from bar with palms facing away. Pull up until chin clears the bar.",
+                "Sostenerte de la barra con las manos hacia afuera. Saca la barra hasta que tu codo pase por la barra.",
             completed: false,
             currentSet: 2,
         },
         {
             id: 4,
-            name: "Barbell Rows",
+            name: "Filamentos de barra",
             sets: 3,
             reps: 10,
             weight: "115 lbs",
             restTime: 90,
             instructions:
-                "Bend at hips, keep back straight. Pull bar to lower chest, squeeze shoulder blades.",
+                "Pon la barra sobre la espalda. Baja la barra hasta el pecho y presiona explosivamente.",
             completed: false,
             currentSet: 0,
         },
         {
             id: 5,
-            name: "Overhead Press",
+            name: "Press de cabeza",
             sets: 3,
             reps: 8,
             weight: "95 lbs",
             restTime: 90,
             instructions:
-                "Press bar overhead, keep core tight. Lower to shoulder level and repeat.",
+                "Presiona la barra sobre la cabeza, mantén el core firme. Baja hasta el nivel de los hombros y repite.",
             completed: false,
             currentSet: 0,
         },
@@ -172,7 +173,7 @@ export default function WorkoutInProgress({ onBack }: { onBack?: () => void }) {
             <div className="flex items-center justify-between mb-6">
                 <Button variant="ghost" size="sm" onClick={onBack}>
                     <ChevronLeft className="h-4 w-4 mr-1" />
-                    Back
+                    Regresar
                 </Button>
                 <div className="text-center">
                     <h1 className="text-xl font-bold text-gray-900">
@@ -182,9 +183,11 @@ export default function WorkoutInProgress({ onBack }: { onBack?: () => void }) {
                         {workoutPlan.duration}
                     </p>
                 </div>
-                <Button variant="ghost" size="sm">
-                    <Home className="h-4 w-4" />
-                </Button>
+                <NavLink to="/dashboard">
+                    <Button variant="ghost" size="sm">
+                        <Home className="h-4 w-4" />
+                    </Button>
+                </NavLink>
             </div>
 
             {/* Progress Overview */}
@@ -194,11 +197,11 @@ export default function WorkoutInProgress({ onBack }: { onBack?: () => void }) {
                         <div className="flex items-center gap-2">
                             <Dumbbell className="h-5 w-5" />
                             <span className="font-medium">
-                                Workout Progress
+                                Progreso del entrenamiento
                             </span>
                         </div>
                         <span className="text-sm">
-                            {completedExercises}/{totalExercises} exercises
+                            {completedExercises}/{totalExercises} ejercicios
                         </span>
                     </div>
                     <Progress
@@ -206,7 +209,7 @@ export default function WorkoutInProgress({ onBack }: { onBack?: () => void }) {
                         className="h-3 bg-orange-400"
                     />
                     <p className="text-sm mt-2 opacity-90">
-                        {Math.round(progressPercentage)}% complete
+                        {Math.round(progressPercentage)}% completado
                     </p>
                 </CardContent>
             </Card>
@@ -218,7 +221,7 @@ export default function WorkoutInProgress({ onBack }: { onBack?: () => void }) {
                         <div className="flex items-center justify-center gap-2 mb-4">
                             <Clock className="h-6 w-6 text-blue-600" />
                             <span className="text-lg font-semibold text-blue-800">
-                                Rest Time
+                                Tiempo de descanso
                             </span>
                         </div>
                         <div className="text-4xl font-bold text-blue-600 mb-4">
@@ -237,14 +240,14 @@ export default function WorkoutInProgress({ onBack }: { onBack?: () => void }) {
                                 ) : (
                                     <Play className="h-4 w-4 mr-2" />
                                 )}
-                                {isTimerRunning ? "Pause" : "Resume"}
+                                {isTimerRunning ? "Pausar" : "Reanudar"}
                             </Button>
                             <Button
                                 onClick={skipRest}
                                 className="bg-blue-500 hover:bg-blue-600"
                             >
                                 <SkipForward className="h-4 w-4 mr-2" />
-                                Skip Rest
+                                Salta el descanso
                             </Button>
                         </div>
                     </CardContent>
@@ -262,7 +265,7 @@ export default function WorkoutInProgress({ onBack }: { onBack?: () => void }) {
                             variant="outline"
                             className="border-orange-500 text-orange-600"
                         >
-                            Exercise {currentExerciseIndex + 1} of{" "}
+                            Ejercicio {currentExerciseIndex + 1} de{" "}
                             {totalExercises}
                         </Badge>
                     </div>
@@ -280,12 +283,14 @@ export default function WorkoutInProgress({ onBack }: { onBack?: () => void }) {
                         </div>
                         <div className="bg-gray-50 p-3 rounded-lg">
                             <RotateCcw className="h-5 w-5 mx-auto mb-1 text-gray-600" />
-                            <p className="text-sm text-gray-600">Reps</p>
+                            <p className="text-sm text-gray-600">
+                                Repeticiones
+                            </p>
                             <p className="font-bold">{currentExercise.reps}</p>
                         </div>
                         <div className="bg-gray-50 p-3 rounded-lg">
                             <Dumbbell className="h-5 w-5 mx-auto mb-1 text-gray-600" />
-                            <p className="text-sm text-gray-600">Weight</p>
+                            <p className="text-sm text-gray-600">Peso</p>
                             <p className="font-bold text-sm">
                                 {currentExercise.weight}
                             </p>
@@ -295,7 +300,7 @@ export default function WorkoutInProgress({ onBack }: { onBack?: () => void }) {
                     {/* Instructions */}
                     <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
                         <h4 className="font-medium text-orange-800 mb-2">
-                            Instructions:
+                            Instrucciones:
                         </h4>
                         <p className="text-sm text-orange-700">
                             {currentExercise.instructions}
@@ -310,7 +315,7 @@ export default function WorkoutInProgress({ onBack }: { onBack?: () => void }) {
                             disabled={isResting}
                         >
                             <Check className="h-5 w-5 mr-2" />
-                            Complete Set {currentExercise.currentSet + 1}
+                            Completar Set {currentExercise.currentSet + 1}
                         </Button>
                         {currentExerciseIndex > 0 && (
                             <Button
@@ -346,7 +351,9 @@ export default function WorkoutInProgress({ onBack }: { onBack?: () => void }) {
             {/* Exercise List */}
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-lg">Exercise List</CardTitle>
+                    <CardTitle className="text-lg">
+                        Lista de Ejercicios
+                    </CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="space-y-3">
@@ -414,34 +421,34 @@ export default function WorkoutInProgress({ onBack }: { onBack?: () => void }) {
                 <DialogContent className="text-center">
                     <DialogHeader>
                         <DialogTitle className="text-2xl text-green-600">
-                            Workout Complete! 🎉
+                            Entrenamiento Completado! 🎉
                         </DialogTitle>
                         <DialogDescription className="text-lg">
-                            Great job completing your {workoutPlan.name}{" "}
-                            workout!
+                            Excelente trabajo completando tu {workoutPlan.name}{" "}
+                            entrenamiento!
                         </DialogDescription>
                     </DialogHeader>
                     <div className="space-y-4 py-4">
                         <div className="bg-green-50 p-4 rounded-lg">
                             <p className="text-green-800 font-medium">
-                                Workout Summary
+                                Resumen del Entrenamiento
                             </p>
                             <p className="text-green-700">
-                                {totalExercises} exercises completed
+                                {totalExercises} ejercicios completados
                             </p>
                             <p className="text-green-700">
-                                Estimated duration: {workoutPlan.duration}
+                                Duración estimada: {workoutPlan.duration}
                             </p>
                         </div>
                         <div className="flex gap-2">
                             <Button className="flex-1 bg-orange-500 hover:bg-orange-600">
-                                Save Workout
+                                Guardar Entrenamiento
                             </Button>
                             <Button
                                 variant="outline"
                                 onClick={() => setShowCompleteDialog(false)}
                             >
-                                Close
+                                Cerrar
                             </Button>
                         </div>
                     </div>

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Bell, Dumbbell } from "lucide-react";
 import MobileMenu from "../mobile-menu";
+import { useNavigate } from "react-router";
 
 export default function Header({
     user,
@@ -11,6 +12,7 @@ export default function Header({
     users,
     setUser,
 }: any) {
+    const navigate = useNavigate();
     return (
         <>
             <header className="bg-white shadow-sm border-b">
@@ -52,7 +54,8 @@ export default function Header({
                                     src={user?.avatar || "/placeholder.svg"}
                                 />
                                 <AvatarFallback>
-                                    {user?.name || ""}
+                                    {user?.name.split(" ")[0][0] +
+                                        user?.name.split(" ")[1][0] || ""}
                                 </AvatarFallback>
                             </Avatar>
                             <span className="font-medium">
@@ -77,14 +80,25 @@ export default function Header({
                                     : "outline"
                             }
                             size="sm"
-                            onClick={() => setUser(currentUser)}
+                            onClick={() => {
+                                setUser(currentUser);
+                                navigate("/dashboard");
+                            }}
                             className={
                                 user.email === currentUser.email
                                     ? "bg-orange-500 hover:bg-orange-600"
                                     : ""
                             }
                         >
-                            {currentUser.role}
+                            {currentUser.role === "Member"
+                                ? "Afiliado"
+                                : currentUser.role === "Receptionist"
+                                ? "Recepcionista"
+                                : currentUser.role === "Medical Staff"
+                                ? "Personal médico"
+                                : currentUser.role === "Administrator"
+                                ? "Administrador"
+                                : ""}
                         </Button>
                     ))}
                     {/* {Object.entries(users).map(([key, userData]) => (

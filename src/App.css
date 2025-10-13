@@ -14,6 +14,10 @@ button {
     background-color: white;
 }
 
+.bg-background {
+    background-color: #ffffff;
+}
+
 @layer base {
     /* 1. Default (Light) Theme */
     :root {
