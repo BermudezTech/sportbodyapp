@@ -56,10 +56,7 @@ function App() {
             <Route
                 element={<Layout user={user} users={users} setUser={setUser} />}
             >
-                <Route
-                    path="/"
-                    element={<Navigate to="/dashboard" replace />}
-                />
+                <Route path="/" element={<Navigate to="/login" replace />} />
                 <Route
                     path="/dashboard"
                     element={<DashboardContent userRole={user.role} />}
