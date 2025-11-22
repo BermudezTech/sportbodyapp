@@ -197,6 +197,7 @@ function ReceptionistDashboard() {
                         <Button
                             variant="outline"
                             className="h-20 flex-col gap-2 bg-transparent"
+                            onClick={() => navigate("/locker-management")}
                         >
                             <Key className="h-6 w-6" />
                             <span className="text-sm">Asignar locker</span>

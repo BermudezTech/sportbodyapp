@@ -66,7 +66,12 @@ export default function Layout({
                         label: "Control de acceso",
                         id: "access-control",
                     },
-                    { icon: Key, label: "Locker", id: "locker" },
+                    {
+                        icon: Key,
+                        label: "Locker",
+                        id: "locker",
+                        to: "/locker-management",
+                    },
                     {
                         icon: CreditCard,
                         label: "Pagos",

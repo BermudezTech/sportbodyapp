@@ -25,7 +25,7 @@ model Usuarios {
 
 model Afiliados {
   id_afiliado       Int            @id
-  documento         String?
+  documento         String? @unique
   fecha_afiliacion  DateTime?
   fecha_vencimiento DateTime?
   qr_code           String?
@@ -60,7 +60,7 @@ model Administradores {
 }
 
 model Lockers {
-  id_locker   Int          @id @default(autoincrement())
+  id_locker   Int          @id @unique
   estado      EstadoLocker @default(disponible)
   id_afiliado Int?
   Afiliado    Afiliados?   @relation(fields: [id_afiliado], references: [id_afiliado])
@@ -115,6 +115,7 @@ enum TipoUsuario {
 enum EstadoLocker {
   disponible
   ocupado
+  alquilado
 }
 
 enum EstadoAcceso {

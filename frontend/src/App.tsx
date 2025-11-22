@@ -9,6 +9,7 @@ import { useState } from "react";
 import MembershipManagement from "./components/membership-management";
 import BillingPayment from "./components/billing-payment";
 import WorkoutInProgress from "./components/workout-in-progress";
+import LockerManagement from "./components/locker-management";
 
 const users = [
     {
@@ -64,6 +65,10 @@ function App() {
                 <Route
                     path="/membership-management"
                     element={<MembershipManagement />}
+                />
+                <Route
+                    path="/locker-management"
+                    element={<LockerManagement />}
                 />
                 <Route path="/billing" element={<BillingPayment />} />
                 <Route
