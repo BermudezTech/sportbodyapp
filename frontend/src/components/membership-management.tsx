@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
     Search,
     Plus,
@@ -10,6 +10,7 @@ import {
     Filter,
     Download,
     Eye,
+    Trash,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -46,70 +47,149 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-// Mock data for existing members
-const mockMembers = [
-    {
-        id: "M001",
-        name: "John Doe",
-        email: "john.doe@email.com",
-        phone: "+1 (555) 123-4567",
-        birthdate: "1990-05-15",
-        membershipType: "Premium",
-        status: "Active",
-        joinDate: "2024-01-15",
-        expiryDate: "2024-12-15",
-        qrCode: "QR001",
-        avatar: "/placeholder.svg?height=40&width=40",
-    },
-    {
-        id: "M002",
-        name: "Sarah Wilson",
-        email: "sarah.wilson@email.com",
-        phone: "+1 (555) 234-5678",
-        birthdate: "1985-08-22",
-        membershipType: "Basic",
-        status: "Active",
-        joinDate: "2024-02-01",
-        expiryDate: "2024-11-01",
-        qrCode: "QR002",
-        avatar: "/placeholder.svg?height=40&width=40",
-    },
-    {
-        id: "M003",
-        name: "Mike Johnson",
-        email: "mike.johnson@email.com",
-        phone: "+1 (555) 345-6789",
-        birthdate: "1992-12-10",
-        membershipType: "Premium",
-        status: "Expired",
-        joinDate: "2023-06-15",
-        expiryDate: "2024-06-15",
-        qrCode: "QR003",
-        avatar: "/placeholder.svg?height=40&width=40",
-    },
-    {
-        id: "M004",
-        name: "Emma Davis",
-        email: "emma.davis@email.com",
-        phone: "+1 (555) 456-7890",
-        birthdate: "1988-03-18",
-        membershipType: "Standard",
-        status: "Active",
-        joinDate: "2024-03-10",
-        expiryDate: "2025-03-10",
-        qrCode: "QR004",
-        avatar: "/placeholder.svg?height=40&width=40",
-    },
-];
-
 export default function MembershipManagement() {
     const [searchTerm, setSearchTerm] = useState("");
     const [filterStatus, setFilterStatus] = useState("all");
     const [isNewMemberDialogOpen, setIsNewMemberDialogOpen] = useState(false);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [selectedMember, setSelectedMember] = useState<any>(null);
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+    const [alertSucess, setAlertSuccess] = useState({
+        show: false,
+        message: "",
+    });
 
-    const filteredMembers = mockMembers.filter((member) => {
+    const [newMemberForm, setNewMemberForm] = useState({
+        nombre: "",
+        apellido: "",
+        correo: "",
+        telefono: "",
+        fecha_nacimiento: "",
+        documento: "",
+        contacto_emergencia: "",
+    });
+
+    const [editMemberForm, setEditMemberForm] = useState({
+        nombre: "",
+        apellido: "",
+        correo: "",
+        telefono: "",
+    });
+
+    const [members, setMembers] = useState<any>([]);
+
+    useEffect(() => {
+        const fetchMembers = async () => {
+            const response = await fetch("http://localhost:3000/api/afiliados");
+            let data = await response.json();
+            data = data.map((member: any) => ({
+                id: member.id_afiliado,
+                name: `${member.Usuario.nombre} ${member.Usuario.apellido}`,
+                email: member.Usuario.correo,
+                phone: member.Usuario.telefono,
+                birthdate: member.Usuario.fecha_nacimiento,
+                membershipType: member.tipo_membresia,
+                status: "Active",
+                joinDate: member.fecha_afiliacion,
+                expiryDate: member.fecha_vencimiento,
+                qrCode: member.qr_code,
+                avatar: "/placeholder.svg?height=40&width=40",
+            }));
+            setMembers(data);
+        };
+        fetchMembers();
+    }, [isNewMemberDialogOpen, isEditDialogOpen, isDeleteDialogOpen]);
+
+    const addAfiliado = async () => {
+        let afiliadoData = {
+            ...newMemberForm,
+            // Convert to ISO-8601 datetime string
+            fecha_nacimiento: new Date(
+                newMemberForm.fecha_nacimiento
+            ).toISOString(),
+        };
+        let response = await fetch("http://localhost:3000/api/afiliados", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(afiliadoData),
+        });
+        if (response.ok) {
+            setIsNewMemberDialogOpen(false);
+            setAlertSuccess({
+                show: true,
+                message: "Afiliado agregado exitosamente",
+            });
+            setTimeout(() => {
+                setAlertSuccess({
+                    show: false,
+                    message: "",
+                });
+            }, 3000);
+            setNewMemberForm({
+                nombre: "",
+                apellido: "",
+                correo: "",
+                telefono: "",
+                fecha_nacimiento: "",
+                documento: "",
+                contacto_emergencia: "",
+            });
+        }
+    };
+
+    const updateAfiliado = async () => {
+        let selectedMemberID = selectedMember.id;
+        let response = await fetch(
+            `http://localhost:3000/api/afiliados/${selectedMemberID}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(editMemberForm),
+            }
+        );
+        if (response.ok) {
+            setIsEditDialogOpen(false);
+            setAlertSuccess({
+                show: true,
+                message: "Afiliado actualizado exitosamente",
+            });
+            setTimeout(() => {
+                setAlertSuccess({
+                    show: false,
+                    message: "",
+                });
+            }, 3000);
+        }
+    };
+
+    const deleteAfiliado = async () => {
+        let selectedMemberID = selectedMember.id;
+        let response = await fetch(
+            `http://localhost:3000/api/afiliados/${selectedMemberID}`,
+            {
+                method: "DELETE",
+            }
+        );
+        if (response.ok) {
+            setIsDeleteDialogOpen(false);
+            setAlertSuccess({
+                show: true,
+                message: "Afiliado eliminado exitosamente",
+            });
+            setTimeout(() => {
+                setAlertSuccess({
+                    show: false,
+                    message: "",
+                });
+            }, 3000);
+        }
+    };
+
+    const filteredMembers = members.filter((member: any) => {
         const matchesSearch =
             member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
             member.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -119,88 +199,6 @@ export default function MembershipManagement() {
             member.status.toLowerCase() === filterStatus.toLowerCase();
         return matchesSearch && matchesFilter;
     });
-
-    const NewMemberForm = () => (
-        <div className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                    <Label htmlFor="firstName">Nombre *</Label>
-                    <Input id="firstName" placeholder="Nombre" />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="lastName">Apellido *</Label>
-                    <Input id="lastName" placeholder="Apellido" />
-                </div>
-            </div>
-
-            <div className="space-y-2">
-                <Label htmlFor="email">Email *</Label>
-                <Input id="email" type="email" placeholder="Email" />
-            </div>
-
-            <div className="space-y-2">
-                <Label htmlFor="phone">Telefono *</Label>
-                <Input id="phone" placeholder="Telefono" />
-            </div>
-
-            <div className="space-y-2">
-                <Label htmlFor="birthdate">Fecha de Nacimiento *</Label>
-                <Input id="birthdate" type="date" />
-            </div>
-
-            <div className="space-y-2">
-                <Label htmlFor="membershipType">Tipo de Membresia *</Label>
-                <Select>
-                    <SelectTrigger>
-                        <SelectValue placeholder="Seleccionar Tipo de Membresia" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="basic">Basic - $49/month</SelectItem>
-                        <SelectItem value="standard">
-                            Standard - $69/month
-                        </SelectItem>
-                        <SelectItem value="premium">
-                            Premium - $89/month
-                        </SelectItem>
-                    </SelectContent>
-                </Select>
-            </div>
-
-            <div className="space-y-2">
-                <Label htmlFor="emergencyContact">Contacto de emergencia</Label>
-                <Input
-                    id="emergencyContact"
-                    placeholder="Contacto de emergencia"
-                />
-            </div>
-
-            <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
-                <div className="flex items-center gap-2 mb-2">
-                    <QrCode className="h-5 w-5 text-orange-600" />
-                    <span className="font-medium text-orange-800">
-                        Generacion de QR
-                    </span>
-                </div>
-                <p className="text-sm text-orange-700">
-                    Un codigo QR unico sera generado automaticamente al momento
-                    de la inscripcion del miembro para el control de acceso al
-                    gimnasio.
-                </p>
-            </div>
-
-            <div className="flex gap-2 pt-4">
-                <Button className="flex-1 bg-orange-500 hover:bg-orange-600">
-                    Registrar Afiliado
-                </Button>
-                <Button
-                    variant="outline"
-                    onClick={() => setIsNewMemberDialogOpen(false)}
-                >
-                    Cancelar
-                </Button>
-            </div>
-        </div>
-    );
 
     return (
         <div className="space-y-6">
@@ -214,6 +212,7 @@ export default function MembershipManagement() {
                         Gestión de registro de afiliados e información
                     </p>
                 </div>
+
                 <Button
                     className="bg-orange-500 hover:bg-orange-600"
                     onClick={() =>
@@ -224,7 +223,11 @@ export default function MembershipManagement() {
                     {isNewMemberDialogOpen ? "Cancelar" : "Nuevo Afiliado"}
                 </Button>
             </div>
-
+            {alertSucess.show && (
+                <div className="bg-green-500 text-white p-4 w-full">
+                    {alertSucess.message}
+                </div>
+            )}
             {/* New Member Form (shown when button is clicked) */}
             {isNewMemberDialogOpen && (
                 <Card className="mb-6 border-2 border-orange-500">
@@ -236,7 +239,174 @@ export default function MembershipManagement() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <NewMemberForm />
+                        <div className="space-y-4">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <Label htmlFor="nombre">Nombre *</Label>
+                                    <Input
+                                        id="nombre"
+                                        placeholder="Nombre"
+                                        value={newMemberForm.nombre}
+                                        onChange={(e) =>
+                                            setNewMemberForm({
+                                                ...newMemberForm,
+                                                nombre: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="apellido">Apellido *</Label>
+                                    <Input
+                                        id="apellido"
+                                        placeholder="Apellido"
+                                        value={newMemberForm.apellido}
+                                        onChange={(e) =>
+                                            setNewMemberForm({
+                                                ...newMemberForm,
+                                                apellido: e.target.value,
+                                            })
+                                        }
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="documento">
+                                    Número de documento *
+                                </Label>
+                                <Input
+                                    id="documento"
+                                    type="documento"
+                                    placeholder="Documento"
+                                    value={newMemberForm.documento}
+                                    onChange={(e) =>
+                                        setNewMemberForm({
+                                            ...newMemberForm,
+                                            documento: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="email">Email *</Label>
+                                <Input
+                                    id="email"
+                                    type="email"
+                                    placeholder="Email"
+                                    value={newMemberForm.correo}
+                                    onChange={(e) =>
+                                        setNewMemberForm({
+                                            ...newMemberForm,
+                                            correo: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="phone">Telefono *</Label>
+                                <Input
+                                    id="phone"
+                                    placeholder="Telefono"
+                                    value={newMemberForm.telefono}
+                                    onChange={(e) =>
+                                        setNewMemberForm({
+                                            ...newMemberForm,
+                                            telefono: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="birthdate">
+                                    Fecha de Nacimiento *
+                                </Label>
+                                <Input
+                                    id="birthdate"
+                                    type="date"
+                                    onChange={(e) =>
+                                        setNewMemberForm({
+                                            ...newMemberForm,
+                                            fecha_nacimiento: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="membershipType">
+                                    Tipo de Membresia *
+                                </Label>
+                                <Select>
+                                    <SelectTrigger>
+                                        <SelectValue placeholder="Seleccionar Tipo de Membresia" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-white">
+                                        <SelectItem value="mensual">
+                                            Mensual
+                                        </SelectItem>
+                                        <SelectItem value="semestral">
+                                            Semestral
+                                        </SelectItem>
+                                        <SelectItem value="anual">
+                                            Anual
+                                        </SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="emergencyContact">
+                                    Contacto de emergencia
+                                </Label>
+                                <Input
+                                    id="emergencyContact"
+                                    placeholder="Contacto de emergencia"
+                                    value={newMemberForm.contacto_emergencia}
+                                    onChange={(e) =>
+                                        setNewMemberForm({
+                                            ...newMemberForm,
+                                            contacto_emergencia: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+
+                            <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
+                                <div className="flex items-center gap-2 mb-2">
+                                    <QrCode className="h-5 w-5 text-orange-600" />
+                                    <span className="font-medium text-orange-800">
+                                        Generacion de QR
+                                    </span>
+                                </div>
+                                <p className="text-sm text-orange-700">
+                                    Un codigo QR unico sera generado
+                                    automaticamente al momento de la inscripcion
+                                    del miembro para el control de acceso al
+                                    gimnasio.
+                                </p>
+                            </div>
+
+                            <div className="flex gap-2 pt-4">
+                                <Button
+                                    className="flex-1 bg-orange-500 hover:bg-orange-600"
+                                    onClick={addAfiliado}
+                                >
+                                    Registrar Afiliado
+                                </Button>
+                                <Button
+                                    variant="outline"
+                                    onClick={() =>
+                                        setIsNewMemberDialogOpen(false)
+                                    }
+                                >
+                                    Cancelar
+                                </Button>
+                            </div>
+                        </div>
                     </CardContent>
                 </Card>
             )}
@@ -245,13 +415,17 @@ export default function MembershipManagement() {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <Card className="border-l-4 border-l-orange-500">
                     <CardContent className="p-4">
-                        <div className="text-2xl font-bold">1,247</div>
+                        <div className="text-2xl font-bold">
+                            {members.length}
+                        </div>
                         <p className="text-sm text-gray-600">Total Afiliados</p>
                     </CardContent>
                 </Card>
                 <Card className="border-l-4 border-l-green-500">
                     <CardContent className="p-4">
-                        <div className="text-2xl font-bold">1,189</div>
+                        <div className="text-2xl font-bold">
+                            {members.length}
+                        </div>
                         <p className="text-sm text-gray-600">
                             Afiliados Activos
                         </p>
@@ -259,7 +433,9 @@ export default function MembershipManagement() {
                 </Card>
                 <Card className="border-l-4 border-l-yellow-500">
                     <CardContent className="p-4">
-                        <div className="text-2xl font-bold">43</div>
+                        <div className="text-2xl font-bold">
+                            {members.length}
+                        </div>
                         <p className="text-sm text-gray-600">
                             Expirando Pronto
                         </p>
@@ -267,7 +443,9 @@ export default function MembershipManagement() {
                 </Card>
                 <Card className="border-l-4 border-l-red-500">
                     <CardContent className="p-4">
-                        <div className="text-2xl font-bold">15</div>
+                        <div className="text-2xl font-bold">
+                            {members.length}
+                        </div>
                         <p className="text-sm text-gray-600">Expirados</p>
                     </CardContent>
                 </Card>
@@ -294,7 +472,7 @@ export default function MembershipManagement() {
                                 <Filter className="h-4 w-4 mr-2" />
                                 <SelectValue />
                             </SelectTrigger>
-                            <SelectContent>
+                            <SelectContent className="bg-white">
                                 <SelectItem value="all">
                                     Todos los estados
                                 </SelectItem>
@@ -340,7 +518,7 @@ export default function MembershipManagement() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {filteredMembers.map((member) => (
+                                {filteredMembers.map((member: any) => (
                                     <TableRow key={member.id}>
                                         <TableCell>
                                             <div className="flex items-center gap-3">
@@ -354,7 +532,9 @@ export default function MembershipManagement() {
                                                     <AvatarFallback>
                                                         {member.name
                                                             .split(" ")
-                                                            .map((n) => n[0])
+                                                            .map(
+                                                                (n: any) => n[0]
+                                                            )
                                                             .join("")}
                                                     </AvatarFallback>
                                                 </Avatar>
@@ -418,6 +598,14 @@ export default function MembershipManagement() {
                                                         setSelectedMember(
                                                             member
                                                         );
+                                                        setEditMemberForm({
+                                                            nombre: member.nombre,
+                                                            apellido:
+                                                                member.apellido,
+                                                            correo: member.correo,
+                                                            telefono:
+                                                                member.telefono,
+                                                        });
                                                         setIsEditDialogOpen(
                                                             true
                                                         );
@@ -436,6 +624,20 @@ export default function MembershipManagement() {
                                                     size="sm"
                                                 >
                                                     <QrCode className="h-4 w-4" />
+                                                </Button>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="sm"
+                                                    onClick={() => {
+                                                        setSelectedMember(
+                                                            member
+                                                        );
+                                                        setIsDeleteDialogOpen(
+                                                            true
+                                                        );
+                                                    }}
+                                                >
+                                                    <Trash className="h-4 w-4" />
                                                 </Button>
                                             </div>
                                         </TableCell>
@@ -471,6 +673,13 @@ export default function MembershipManagement() {
                                         defaultValue={
                                             selectedMember.name.split(" ")[0]
                                         }
+                                        onChange={(e) =>
+                                            setEditMemberForm({
+                                                ...editMemberForm,
+                                                nombre: e.target.value,
+                                            })
+                                        }
+                                        value={editMemberForm.nombre}
                                     />
                                 </div>
                                 <div className="space-y-2">
@@ -482,6 +691,13 @@ export default function MembershipManagement() {
                                         defaultValue={
                                             selectedMember.name.split(" ")[1]
                                         }
+                                        onChange={(e) =>
+                                            setEditMemberForm({
+                                                ...editMemberForm,
+                                                apellido: e.target.value,
+                                            })
+                                        }
+                                        value={editMemberForm.apellido}
                                     />
                                 </div>
                             </div>
@@ -492,6 +708,13 @@ export default function MembershipManagement() {
                                 <Input
                                     id="editEmail"
                                     defaultValue={selectedMember.email}
+                                    onChange={(e) =>
+                                        setEditMemberForm({
+                                            ...editMemberForm,
+                                            correo: e.target.value,
+                                        })
+                                    }
+                                    value={editMemberForm.correo}
                                 />
                             </div>
                             <div className="space-y-2">
@@ -501,6 +724,13 @@ export default function MembershipManagement() {
                                 <Input
                                     id="editPhone"
                                     defaultValue={selectedMember.phone}
+                                    onChange={(e) =>
+                                        setEditMemberForm({
+                                            ...editMemberForm,
+                                            telefono: e.target.value,
+                                        })
+                                    }
+                                    value={editMemberForm.telefono}
                                 />
                             </div>
                             <div className="space-y-2">
@@ -513,21 +743,24 @@ export default function MembershipManagement() {
                                     <SelectTrigger>
                                         <SelectValue />
                                     </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="basic">
-                                            Básico - $49/mes
+                                    <SelectContent className="bg-white">
+                                        <SelectItem value="mensual">
+                                            Mensual
                                         </SelectItem>
-                                        <SelectItem value="standard">
-                                            Standard - $69/mes
+                                        <SelectItem value="semestral">
+                                            Semestral
                                         </SelectItem>
-                                        <SelectItem value="premium">
-                                            Premium - $89/mes
+                                        <SelectItem value="anual">
+                                            Anual
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
                             </div>
                             <div className="flex gap-2 pt-4">
-                                <Button className="flex-1 bg-orange-500 hover:bg-orange-600">
+                                <Button
+                                    className="flex-1 bg-orange-500 hover:bg-orange-600"
+                                    onClick={updateAfiliado}
+                                >
                                     Actualizar Afiliado
                                 </Button>
                                 <Button
@@ -539,6 +772,35 @@ export default function MembershipManagement() {
                             </div>
                         </div>
                     )}
+                </DialogContent>
+            </Dialog>
+
+            {/* Delete Member Dialog */}
+            <Dialog
+                open={isDeleteDialogOpen}
+                onOpenChange={setIsDeleteDialogOpen}
+            >
+                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+                    <DialogHeader>
+                        <DialogTitle>Eliminar Afiliado</DialogTitle>
+                        <DialogDescription>
+                            ¿Estás seguro de eliminar este afiliado?
+                        </DialogDescription>
+                    </DialogHeader>
+                    <div className="flex gap-2 pt-4">
+                        <Button
+                            className="flex-1 bg-red-500 hover:bg-red-600"
+                            onClick={deleteAfiliado}
+                        >
+                            Eliminar Afiliado
+                        </Button>
+                        <Button
+                            variant="outline"
+                            onClick={() => setIsDeleteDialogOpen(false)}
+                        >
+                            Cancelar
+                        </Button>
+                    </div>
                 </DialogContent>
             </Dialog>
         </div>

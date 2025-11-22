@@ -7,8 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import { QrCode } from "lucide-react";
 import { CardDescription } from "@/components/ui/card";
 import { Key, CreditCard } from "lucide-react";
+import { useNavigate } from "react-router";
 
 function ReceptionistDashboard() {
+    let navigate = useNavigate();
     return (
         <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -187,9 +189,10 @@ function ReceptionistDashboard() {
                         <Button
                             variant="outline"
                             className="h-20 flex-col gap-2 bg-transparent"
+                            onClick={() => navigate("/membership-management")}
                         >
                             <Users className="h-6 w-6" />
-                            <span className="text-sm">Nuevo miembro</span>
+                            <span className="text-sm">Gestionar afiliados</span>
                         </Button>
                         <Button
                             variant="outline"
