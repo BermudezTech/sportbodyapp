@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuarios {
+  id_usuario     Int              @id @default(autoincrement())
+  nombre         String?
+  apellido       String?
+  telefono       String?
+  fecha_nacimiento DateTime?
+  correo         String?
+  nombre_usuario String
+  password       String?
+  tipo_usuario   TipoUsuario?
+  Administrador  Administradores?
+  Afiliado       Afiliados?
+  Medico         PersonalMedico?
+  Recepcionista  Recepcionistas?
+}
+
+model Afiliados {
+  id_afiliado       Int            @id
+  documento         String?
+  fecha_afiliacion  DateTime?
+  fecha_vencimiento DateTime?
+  qr_code           String?
+
+  // Nuevos campos para CRUD
+  fecha_nacimiento     DateTime?
+  tipo_membresia       String
+  contacto_emergencia  String?
+
+  Accesos           Accesos[]
+  Usuario           Usuarios       @relation(fields: [id_afiliado], references: [id_usuario])
+  Facturas          Facturas[]
+  Locker            Lockers[]
+  Rutinas           Rutinas[]
+  Valoraciones      Valoraciones[]
+}
+
+model PersonalMedico {
+  id_medico    Int            @id
+  Usuario      Usuarios       @relation(fields: [id_medico], references: [id_usuario])
+  Valoraciones Valoraciones[]
+}
+
+model Recepcionistas {
+  id_recepcionista Int      @id
+  Usuario          Usuarios @relation(fields: [id_recepcionista], references: [id_usuario])
+}
+
+model Administradores {
+  id_administrador Int      @id
+  Usuario          Usuarios @relation(fields: [id_administrador], references: [id_usuario])
+}
+
+model Lockers {
+  id_locker   Int          @id @default(autoincrement())
+  estado      EstadoLocker @default(disponible)
+  id_afiliado Int?
+  Afiliado    Afiliados?   @relation(fields: [id_afiliado], references: [id_afiliado])
+}
+
+model Valoraciones {
+  id_valoracion Int            @id @default(autoincrement())
+  fecha         DateTime?
+  peso          Decimal?
+  imc           Decimal?
+  observaciones String?
+  id_afiliado   Int
+  id_medico     Int
+  Afiliado      Afiliados      @relation(fields: [id_afiliado], references: [id_afiliado])
+  Medico        PersonalMedico @relation(fields: [id_medico], references: [id_medico])
+}
+
+model Rutinas {
+  id_rutina        Int       @id @default(autoincrement())
+  nombre           String?
+  descripcion      String?
+  duracion_semanas Int?
+  ejercicios       String?
+  id_afiliado      Int
+  Afiliado         Afiliados @relation(fields: [id_afiliado], references: [id_afiliado])
+}
+
+model Accesos {
+  id_acceso   Int          @id @default(autoincrement())
+  fecha_hora  DateTime?
+  estado      EstadoAcceso
+  id_afiliado Int
+  Afiliado    Afiliados    @relation(fields: [id_afiliado], references: [id_afiliado])
+}
+
+model Facturas {
+  id_factura    Int       @id @default(autoincrement())
+  fecha_emision DateTime?
+  monto         Decimal?
+  id_afiliado   Int
+  Afiliado      Afiliados @relation(fields: [id_afiliado], references: [id_afiliado])
+}
+
+/// ENUMS
+enum TipoUsuario {
+  afiliado
+  recepcionista
+  administrador
+  medico
+}
+
+enum EstadoLocker {
+  disponible
+  ocupado
+}
+
+enum EstadoAcceso {
+  autorizado
+  denegado
+}
