@@ -10,6 +10,7 @@ import MembershipManagement from "./components/membership-management";
 import BillingPayment from "./components/billing-payment";
 import WorkoutInProgress from "./components/workout-in-progress";
 import LockerManagement from "./components/locker-management";
+import UserManagement from "./components/user-management";
 
 const users = [
     {
@@ -66,6 +67,7 @@ function App() {
                     path="/membership-management"
                     element={<MembershipManagement />}
                 />
+                <Route path="/user-management" element={<UserManagement />} />
                 <Route
                     path="/locker-management"
                     element={<LockerManagement />}

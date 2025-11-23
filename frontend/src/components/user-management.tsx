@@ -47,7 +47,7 @@ import {
     TableRow,
 } from "@/components/ui/table";
 
-export default function MembershipManagement() {
+export default function UserManagement() {
     const [searchTerm, setSearchTerm] = useState("");
     const [filterStatus, setFilterStatus] = useState("all");
     const [isNewMemberDialogOpen, setIsNewMemberDialogOpen] = useState(false);
@@ -65,8 +65,7 @@ export default function MembershipManagement() {
         correo: "",
         telefono: "",
         fecha_nacimiento: "",
-        documento: "",
-        contacto_emergencia: "",
+        tipo_usuario: "",
     });
 
     const [editMemberForm, setEditMemberForm] = useState({
@@ -74,25 +73,24 @@ export default function MembershipManagement() {
         apellido: "",
         correo: "",
         telefono: "",
+        fecha_nacimiento: "",
+        tipo_usuario: "",
     });
 
     const [members, setMembers] = useState<any>([]);
 
     useEffect(() => {
         const fetchMembers = async () => {
-            const response = await fetch("http://localhost:3000/api/afiliados");
+            const response = await fetch("http://localhost:3000/api/usuarios");
             let data = await response.json();
             data = data.map((member: any) => ({
-                id: member.id_afiliado,
-                name: `${member.Usuario.nombre} ${member.Usuario.apellido}`,
-                email: member.Usuario.correo,
-                phone: member.Usuario.telefono,
-                birthdate: member.Usuario.fecha_nacimiento,
-                membershipType: member.tipo_membresia,
-                status: "Active",
-                joinDate: member.fecha_afiliacion,
-                expiryDate: member.fecha_vencimiento,
-                qrCode: member.qr_code,
+                id: member.id_usuario,
+                name: `${member.nombre} ${member.apellido}`,
+                nombre: member.nombre,
+                apellido: member.apellido,
+                email: member.correo,
+                phone: member.telefono,
+                user_type: member.tipo_usuario,
                 avatar: "/placeholder.svg?height=40&width=40",
             }));
             setMembers(data);
@@ -107,8 +105,10 @@ export default function MembershipManagement() {
             fecha_nacimiento: new Date(
                 newMemberForm.fecha_nacimiento
             ).toISOString(),
+            nombre_usuario: newMemberForm.correo,
+            password: "123456",
         };
-        let response = await fetch("http://localhost:3000/api/afiliados", {
+        let response = await fetch("http://localhost:3000/api/usuarios", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -119,7 +119,7 @@ export default function MembershipManagement() {
             setIsNewMemberDialogOpen(false);
             setAlertSuccess({
                 show: true,
-                message: "Afiliado agregado exitosamente",
+                message: "Usuario agregado exitosamente",
             });
             setTimeout(() => {
                 setAlertSuccess({
@@ -133,16 +133,15 @@ export default function MembershipManagement() {
                 correo: "",
                 telefono: "",
                 fecha_nacimiento: "",
-                documento: "",
-                contacto_emergencia: "",
+                tipo_usuario: "",
             });
         }
     };
 
-    const updateAfiliado = async () => {
+    const updateUsuario = async () => {
         let selectedMemberID = selectedMember.id;
         let response = await fetch(
-            `http://localhost:3000/api/afiliados/${selectedMemberID}`,
+            `http://localhost:3000/api/usuarios/${selectedMemberID}`,
             {
                 method: "PUT",
                 headers: {
@@ -166,10 +165,10 @@ export default function MembershipManagement() {
         }
     };
 
-    const deleteAfiliado = async () => {
+    const deleteUsuario = async () => {
         let selectedMemberID = selectedMember.id;
         let response = await fetch(
-            `http://localhost:3000/api/afiliados/${selectedMemberID}`,
+            `http://localhost:3000/api/usuarios/${selectedMemberID}`,
             {
                 method: "DELETE",
             }
@@ -206,10 +205,10 @@ export default function MembershipManagement() {
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
                 <div>
                     <h1 className="text-2xl font-bold text-gray-900">
-                        Gestionar Afiliados
+                        Gestionar Usuarios
                     </h1>
                     <p className="text-gray-600">
-                        Gestión de registro de afiliados e información
+                        Gestión de todos los usuarios del sistema
                     </p>
                 </div>
 
@@ -220,7 +219,7 @@ export default function MembershipManagement() {
                     }
                 >
                     <Plus className="h-4 w-4 mr-2" />
-                    {isNewMemberDialogOpen ? "Cancelar" : "Nuevo Afiliado"}
+                    {isNewMemberDialogOpen ? "Cancelar" : "Nuevo Usuario"}
                 </Button>
             </div>
             {alertSucess.show && (
@@ -232,10 +231,10 @@ export default function MembershipManagement() {
             {isNewMemberDialogOpen && (
                 <Card className="mb-6 border-2 border-orange-500">
                     <CardHeader>
-                        <CardTitle>Registro de nuevo afiliado</CardTitle>
+                        <CardTitle>Registro de nuevo usuario</CardTitle>
                         <CardDescription>
-                            Llenar la información del miembro para crear un
-                            nuevo miembro.
+                            Llenar la información del usuario para crear un
+                            nuevo usuario.
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -269,24 +268,6 @@ export default function MembershipManagement() {
                                         }
                                     />
                                 </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="documento">
-                                    Número de documento *
-                                </Label>
-                                <Input
-                                    id="documento"
-                                    type="documento"
-                                    placeholder="Documento"
-                                    value={newMemberForm.documento}
-                                    onChange={(e) =>
-                                        setNewMemberForm({
-                                            ...newMemberForm,
-                                            documento: e.target.value,
-                                        })
-                                    }
-                                />
                             </div>
 
                             <div className="space-y-2">
@@ -338,56 +319,32 @@ export default function MembershipManagement() {
 
                             <div className="space-y-2">
                                 <Label htmlFor="membershipType">
-                                    Tipo de Membresia *
+                                    Tipo de Usuario *
                                 </Label>
-                                <Select>
+                                <Select
+                                    onValueChange={(e: any) => {
+                                        setNewMemberForm({
+                                            ...newMemberForm,
+                                            tipo_usuario: e,
+                                        });
+                                    }}
+                                    defaultValue={newMemberForm.tipo_usuario}
+                                >
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Seleccionar Tipo de Membresia" />
+                                        <SelectValue placeholder="Seleccionar Tipo de Usuario" />
                                     </SelectTrigger>
                                     <SelectContent className="bg-white">
-                                        <SelectItem value="mensual">
-                                            Mensual
+                                        <SelectItem value="administrador">
+                                            Administrador
                                         </SelectItem>
-                                        <SelectItem value="semestral">
-                                            Semestral
+                                        <SelectItem value="recepcionista">
+                                            Recepcionista
                                         </SelectItem>
-                                        <SelectItem value="anual">
-                                            Anual
+                                        <SelectItem value="medico">
+                                            Personal Médico
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
-                            </div>
-
-                            <div className="space-y-2">
-                                <Label htmlFor="emergencyContact">
-                                    Contacto de emergencia
-                                </Label>
-                                <Input
-                                    id="emergencyContact"
-                                    placeholder="Contacto de emergencia"
-                                    value={newMemberForm.contacto_emergencia}
-                                    onChange={(e) =>
-                                        setNewMemberForm({
-                                            ...newMemberForm,
-                                            contacto_emergencia: e.target.value,
-                                        })
-                                    }
-                                />
-                            </div>
-
-                            <div className="bg-orange-50 p-4 rounded-lg border border-orange-200">
-                                <div className="flex items-center gap-2 mb-2">
-                                    <QrCode className="h-5 w-5 text-orange-600" />
-                                    <span className="font-medium text-orange-800">
-                                        Generacion de QR
-                                    </span>
-                                </div>
-                                <p className="text-sm text-orange-700">
-                                    Un codigo QR unico sera generado
-                                    automaticamente al momento de la inscripcion
-                                    del miembro para el control de acceso al
-                                    gimnasio.
-                                </p>
                             </div>
 
                             <div className="flex gap-2 pt-4">
@@ -395,7 +352,7 @@ export default function MembershipManagement() {
                                     className="flex-1 bg-orange-500 hover:bg-orange-600"
                                     onClick={addAfiliado}
                                 >
-                                    Registrar Afiliado
+                                    Registrar Usuario
                                 </Button>
                                 <Button
                                     variant="outline"
@@ -410,46 +367,6 @@ export default function MembershipManagement() {
                     </CardContent>
                 </Card>
             )}
-
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                <Card className="border-l-4 border-l-orange-500">
-                    <CardContent className="p-4">
-                        <div className="text-2xl font-bold">
-                            {members.length}
-                        </div>
-                        <p className="text-sm text-gray-600">Total Afiliados</p>
-                    </CardContent>
-                </Card>
-                <Card className="border-l-4 border-l-green-500">
-                    <CardContent className="p-4">
-                        <div className="text-2xl font-bold">
-                            {members.length}
-                        </div>
-                        <p className="text-sm text-gray-600">
-                            Afiliados Activos
-                        </p>
-                    </CardContent>
-                </Card>
-                <Card className="border-l-4 border-l-yellow-500">
-                    <CardContent className="p-4">
-                        <div className="text-2xl font-bold">
-                            {members.length}
-                        </div>
-                        <p className="text-sm text-gray-600">
-                            Expirando Pronto
-                        </p>
-                    </CardContent>
-                </Card>
-                <Card className="border-l-4 border-l-red-500">
-                    <CardContent className="p-4">
-                        <div className="text-2xl font-bold">
-                            {members.length}
-                        </div>
-                        <p className="text-sm text-gray-600">Expirados</p>
-                    </CardContent>
-                </Card>
-            </div>
 
             {/* Search and Filters */}
             <Card>
@@ -496,23 +413,19 @@ export default function MembershipManagement() {
             {/* Members Table */}
             <Card>
                 <CardHeader>
-                    <CardTitle>Afiliados ({filteredMembers.length})</CardTitle>
+                    <CardTitle>Usuarios ({filteredMembers.length})</CardTitle>
                 </CardHeader>
                 <CardContent>
                     <div className="overflow-x-auto">
                         <Table>
                             <TableHeader>
                                 <TableRow>
-                                    <TableHead>Afiliado</TableHead>
+                                    <TableHead>Usuario</TableHead>
                                     <TableHead className="hidden md:table-cell">
                                         Contacto
                                     </TableHead>
                                     <TableHead className="hidden lg:table-cell">
-                                        Miembro
-                                    </TableHead>
-                                    <TableHead>Estado</TableHead>
-                                    <TableHead className="hidden lg:table-cell">
-                                        Expiración
+                                        Tipo de usuario
                                     </TableHead>
                                     <TableHead>Acciones</TableHead>
                                 </TableRow>
@@ -542,9 +455,6 @@ export default function MembershipManagement() {
                                                     <p className="font-medium">
                                                         {member.name}
                                                     </p>
-                                                    <p className="text-sm text-gray-500">
-                                                        {member.id}
-                                                    </p>
                                                 </div>
                                             </div>
                                         </TableCell>
@@ -562,32 +472,8 @@ export default function MembershipManagement() {
                                         </TableCell>
                                         <TableCell className="hidden lg:table-cell">
                                             <Badge variant="outline">
-                                                {member.membershipType}
+                                                {member.user_type}
                                             </Badge>
-                                        </TableCell>
-                                        <TableCell>
-                                            <Badge
-                                                variant={
-                                                    member.status === "Active"
-                                                        ? "default"
-                                                        : "destructive"
-                                                }
-                                                className={
-                                                    member.status === "Active"
-                                                        ? "bg-green-500 hover:bg-green-600"
-                                                        : ""
-                                                }
-                                            >
-                                                {member.status}
-                                            </Badge>
-                                        </TableCell>
-                                        <TableCell className="hidden lg:table-cell">
-                                            <div className="flex items-center gap-1 text-sm">
-                                                <Calendar className="h-3 w-3" />
-                                                {new Date(
-                                                    member.expiryDate
-                                                ).toLocaleDateString()}
-                                            </div>
                                         </TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-2">
@@ -605,6 +491,10 @@ export default function MembershipManagement() {
                                                             correo: member.correo,
                                                             telefono:
                                                                 member.telefono,
+                                                            fecha_nacimiento:
+                                                                member.fecha_nacimiento,
+                                                            tipo_usuario:
+                                                                member.tipo_usuario,
                                                         });
                                                         setIsEditDialogOpen(
                                                             true
@@ -612,18 +502,6 @@ export default function MembershipManagement() {
                                                     }}
                                                 >
                                                     <Edit className="h-4 w-4" />
-                                                </Button>
-                                                <Button
-                                                    variant="ghost"
-                                                    size="sm"
-                                                >
-                                                    <Eye className="h-4 w-4" />
-                                                </Button>
-                                                <Button
-                                                    variant="ghost"
-                                                    size="sm"
-                                                >
-                                                    <QrCode className="h-4 w-4" />
                                                 </Button>
                                                 <Button
                                                     variant="ghost"
@@ -654,11 +532,10 @@ export default function MembershipManagement() {
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                         <DialogTitle>
-                            Editar Información del Afiliado
+                            Editar Información del Usuario
                         </DialogTitle>
                         <DialogDescription>
-                            Actualizar detalles del miembro y la información de
-                            la membresía.
+                            Actualizar detalles del usuario.
                         </DialogDescription>
                     </DialogHeader>
                     {selectedMember && (
@@ -688,9 +565,7 @@ export default function MembershipManagement() {
                                     </Label>
                                     <Input
                                         id="editLastName"
-                                        defaultValue={
-                                            selectedMember.name.split(" ")[1]
-                                        }
+                                        defaultValue={selectedMember.apellido}
                                         onChange={(e) =>
                                             setEditMemberForm({
                                                 ...editMemberForm,
@@ -735,23 +610,26 @@ export default function MembershipManagement() {
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="editMembershipType">
-                                    Tipo de Membresía
+                                    Tipo de Usuario
                                 </Label>
                                 <Select
-                                    defaultValue={selectedMember.membershipType.toLowerCase()}
+                                    defaultValue={selectedMember.user_type.toLowerCase()}
                                 >
                                     <SelectTrigger>
                                         <SelectValue />
                                     </SelectTrigger>
                                     <SelectContent className="bg-white">
-                                        <SelectItem value="mensual">
-                                            Mensual
+                                        <SelectItem value="administrador">
+                                            Administrador
                                         </SelectItem>
-                                        <SelectItem value="semestral">
-                                            Semestral
+                                        <SelectItem value="recepcionista">
+                                            Recepcionista
                                         </SelectItem>
-                                        <SelectItem value="anual">
-                                            Anual
+                                        <SelectItem value="medico">
+                                            Médico
+                                        </SelectItem>
+                                        <SelectItem value="afiliado">
+                                            Afiliado
                                         </SelectItem>
                                     </SelectContent>
                                 </Select>
@@ -759,9 +637,9 @@ export default function MembershipManagement() {
                             <div className="flex gap-2 pt-4">
                                 <Button
                                     className="flex-1 bg-orange-500 hover:bg-orange-600"
-                                    onClick={updateAfiliado}
+                                    onClick={updateUsuario}
                                 >
-                                    Actualizar Afiliado
+                                    Actualizar Usuario
                                 </Button>
                                 <Button
                                     variant="outline"
@@ -782,17 +660,17 @@ export default function MembershipManagement() {
             >
                 <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
-                        <DialogTitle>Eliminar Afiliado</DialogTitle>
+                        <DialogTitle>Eliminar Usuario</DialogTitle>
                         <DialogDescription>
-                            ¿Estás seguro de eliminar este afiliado?
+                            ¿Estás seguro de eliminar este usuario?
                         </DialogDescription>
                     </DialogHeader>
                     <div className="flex gap-2 pt-4">
                         <Button
                             className="flex-1 bg-red-500 hover:bg-red-600"
-                            onClick={deleteAfiliado}
+                            onClick={deleteUsuario}
                         >
-                            Eliminar Afiliado
+                            Eliminar Usuario
                         </Button>
                         <Button
                             variant="outline"

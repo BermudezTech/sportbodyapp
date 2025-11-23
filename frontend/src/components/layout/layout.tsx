@@ -93,7 +93,12 @@ export default function Layout({
             case "Administrator":
                 return [
                     ...baseItems,
-                    { icon: Users, label: "Miembros", id: "members" },
+                    {
+                        icon: Users,
+                        label: "Usuarios",
+                        id: "members",
+                        to: "/user-management",
+                    },
                     { icon: BarChart3, label: "Reportes", id: "reports" },
                     { icon: CreditCard, label: "Financiero", id: "financial" },
                     { icon: Settings, label: "Configuración", id: "settings" },
