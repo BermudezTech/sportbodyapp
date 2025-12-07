@@ -3,13 +3,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Bell, Dumbbell } from "lucide-react";
 import MobileMenu from "../mobile-menu";
 import { useNavigate } from "react-router";
+import { getInitials } from "@/helpers/getInitials";
 
 export default function Header({
     user,
     navigationItems,
     isMenuOpen,
     setIsMenuOpen,
-    users,
     setUser,
 }: any) {
     const navigate = useNavigate();
@@ -54,8 +54,7 @@ export default function Header({
                                     src={user?.avatar || "/placeholder.svg"}
                                 />
                                 <AvatarFallback>
-                                    {user?.name.split(" ")[0][0] +
-                                        user?.name.split(" ")[1][0] || ""}
+                                    {getInitials(user.name)}
                                 </AvatarFallback>
                             </Avatar>
                             <span className="font-medium">
@@ -66,7 +65,7 @@ export default function Header({
                 </div>
             </header>
             {/* Role Switcher for Demo */}
-            <div className="p-4 bg-orange-50 border-b">
+            {/* <div className="p-4 bg-orange-50 border-b">
                 <div className="flex flex-wrap gap-2">
                     <span className="text-sm font-medium text-gray-700 mr-2">
                         Demo - Cambiar rol:
@@ -115,9 +114,9 @@ export default function Header({
                         >
                             {user.role}
                         </Button>
-                    ))} */}
+                    ))} 
                 </div>
-            </div>
+            </div> */}
         </>
     );
 }

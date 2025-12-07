@@ -5,35 +5,13 @@ import DashboardContent from "@/components/dashboard-content";
 // import BillingPage from "@/pages/BillingPage";
 // import WorkoutPage from "@/pages/WorkoutPage";
 import LoginPage from "@/pages/login";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MembershipManagement from "./components/membership-management";
 import BillingPayment from "./components/billing-payment";
 import WorkoutInProgress from "./components/workout-in-progress";
 import LockerManagement from "./components/locker-management";
 import UserManagement from "./components/user-management";
-
-const users = [
-    {
-        name: "John Doe",
-        role: "Member",
-        email: "member@sportbodygym.com",
-    },
-    {
-        name: "Sarah Wilson",
-        role: "Receptionist",
-        email: "receptionist@sportbodygym.com",
-    },
-    {
-        name: "Dr. Mike Johnson",
-        role: "Medical Staff",
-        email: "doctor@sportbodygym.com",
-    },
-    {
-        name: "Alex Rodriguez",
-        role: "Administrator",
-        email: "admin@sportbodygym.com",
-    },
-];
+import ChangePasswordPage from "./pages/changePassword";
 
 function App() {
     let [user, setUser] = useState<{
@@ -41,24 +19,30 @@ function App() {
         role: string;
         name: string;
     }>({
-        email: "member@sportbodygym.com",
-        role: "Member",
-        name: "John Doe",
+        email: "",
+        role: "",
+        name: "",
     });
+
+    useEffect(() => {
+        if (localStorage.getItem("user")) {
+            setUser({
+                email: localStorage.getItem("user") || "",
+                role: localStorage.getItem("role") || "",
+                name: localStorage.getItem("name") || "",
+            });
+        }
+    }, []);
 
     return (
         <Routes>
             {/* Login */}
-            <Route
-                path="/login"
-                element={<LoginPage setUser={setUser} users={users} />}
-            />
+            <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/login" element={<LoginPage setUser={setUser} />} />
+            <Route path="/change-password" element={<ChangePasswordPage />} />
 
             {/* Rutas con layout del dashboard */}
-            <Route
-                element={<Layout user={user} users={users} setUser={setUser} />}
-            >
-                <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route element={<Layout user={user} setUser={setUser} />}>
                 <Route
                     path="/dashboard"
                     element={<DashboardContent userRole={user.role} />}

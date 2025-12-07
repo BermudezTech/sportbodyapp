@@ -16,15 +16,7 @@ import {
 } from "lucide-react";
 import Footer from "./Footer";
 
-export default function Layout({
-    user,
-    users,
-    setUser,
-}: {
-    user: any;
-    users: any;
-    setUser: any;
-}) {
+export default function Layout({ user, setUser }: { user: any; setUser: any }) {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [navigationItems, setNavigationItems] = useState<any>([]);
 
@@ -39,7 +31,7 @@ export default function Layout({
         ];
 
         switch (role) {
-            case "Member":
+            case "afiliado":
                 return [
                     ...baseItems,
                     { icon: User, label: "Mi perfil", id: "profile" },
@@ -52,7 +44,7 @@ export default function Layout({
                         id: "workouts",
                     },
                 ];
-            case "Receptionist":
+            case "recepcionista":
                 return [
                     ...baseItems,
                     {
@@ -79,7 +71,7 @@ export default function Layout({
                         to: "/billing",
                     },
                 ];
-            case "Medical Staff":
+            case "medico":
                 return [
                     ...baseItems,
                     { icon: Users, label: "Afiliados", id: "members" },
@@ -90,7 +82,7 @@ export default function Layout({
                     },
                     { icon: FileText, label: "Medical Records", id: "medical" },
                 ];
-            case "Administrator":
+            case "administrador":
                 return [
                     ...baseItems,
                     {
@@ -125,7 +117,6 @@ export default function Layout({
                     setIsMobileMenuOpen={setIsMobileMenuOpen}
                     user={user}
                     navigationItems={navigationItems}
-                    users={users}
                     setUser={setUser}
                 />
 

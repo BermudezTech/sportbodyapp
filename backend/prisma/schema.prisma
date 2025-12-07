@@ -13,7 +13,7 @@ model Usuarios {
   apellido       String?
   telefono       String?
   fecha_nacimiento DateTime?
-  correo         String?
+  correo         String? @unique
   nombre_usuario String
   password       String?
   tipo_usuario   TipoUsuario?

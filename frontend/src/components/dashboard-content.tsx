@@ -5,13 +5,13 @@ import ReceptionistDashboard from "./recepcionist-dashboard";
 
 function DashboardContent({ userRole }: { userRole: string }) {
     switch (userRole) {
-        case "Member":
+        case "afiliado":
             return <MemberDashboard />;
-        case "Receptionist":
+        case "recepcionista":
             return <ReceptionistDashboard />;
-        case "Medical Staff":
+        case "medico":
             return <MedicalDashboard />;
-        case "Administrator":
+        case "administrador":
             return <AdminDashboard />;
         default:
             return <MemberDashboard />;

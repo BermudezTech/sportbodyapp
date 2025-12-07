@@ -20,75 +20,17 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { useNavigate } from "react-router";
 import Footer from "@/components/layout/Footer";
+import { useNavigate } from "react-router";
 
-// Mock user credentials for demo
-const mockUsers = {
-    "admin@sportbodygym.com": {
-        password: "admin123",
-        role: "Administrator",
-        name: "Alex Rodriguez",
-    },
-    "receptionist@sportbodygym.com": {
-        password: "reception123",
-        role: "Receptionist",
-        name: "Sarah Wilson",
-    },
-    "doctor@sportbodygym.com": {
-        password: "medical123",
-        role: "Medical Staff",
-        name: "Dr. Mike Johnson",
-    },
-    "member@sportbodygym.com": {
-        password: "member123",
-        role: "Member",
-        name: "John Doe",
-    },
-};
-
-// Error types for different scenarios
-const errorMessages = {
-    invalidCredentials: {
-        title: "Credenciales Inválidas",
-        message:
-            "El correo electrónico o la contraseña son incorrectos. Por favor, verifica tus credenciales e intenta nuevamente.",
-        type: "user",
-    },
-    serverError: {
-        title: "Error del Servidor",
-        message:
-            "Ha ocurrido un error en el servidor. Por favor, intenta nuevamente más tarde.",
-        type: "server",
-    },
-    networkError: {
-        title: "Error de Red",
-        message:
-            "No se pudo establecer una conexión con el servidor. Por favor, verifica tu conexión a Internet e intenta nuevamente.",
-        type: "network",
-    },
-    accountLocked: {
-        title: "Cuenta Bloqueada",
-        message:
-            "Tu cuenta ha sido bloqueada temporalmente. Por favor, intenta nuevamente más tarde.",
-        type: "security",
-    },
-    maintenanceMode: {
-        title: "Modo de Mantenimiento",
-        message:
-            "El sistema se encuentra en modo de mantenimiento. Por favor, intenta nuevamente más tarde.",
-        type: "maintenance",
-    },
-};
+// URL base de tu API de NestJS. ¡Ajusta esto!
+const API_BASE_URL = "http://localhost:3000";
 
 export default function LoginPage({
     setUser,
-    users,
 }: {
     setUser: (user: any) => void;
-    users: any[];
 }) {
-    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -99,92 +41,76 @@ export default function LoginPage({
     const [error, setError] = useState<any>(null);
     const [showErrorModal, setShowErrorModal] = useState(false);
 
+    let navigate = useNavigate();
+
     const handleInputChange = (field: string, value: string | boolean) => {
         setFormData((prev) => ({
             ...prev,
             [field]: value,
         }));
-        // Clear error when user starts typing
+        // Limpiar el error cuando el usuario comienza a escribir
         if (error) {
             setError(null);
         }
     };
 
-    const simulateRandomError = () => {
-        const errorTypes = Object.keys(errorMessages);
-        const randomError =
-            errorTypes[Math.floor(Math.random() * errorTypes.length)];
-        return errorMessages[randomError as keyof typeof errorMessages];
-    };
-
+    /**
+     * @function handleLogin
+     * Maneja el envío del formulario de login y se conecta al backend.
+     */
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
         setError(null);
 
-        // Simulate network delay
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-
         try {
-            // Simulate random server errors (20% chance)
-            if (Math.random() < 0.2) {
-                const randomError = simulateRandomError();
-                setError(randomError);
-                setShowErrorModal(true);
-                setIsLoading(false);
-                return;
-            }
-
-            // Check credentials
-            const user = mockUsers[formData.email as keyof typeof mockUsers];
-
-            if (!user || user.password !== formData.password) {
-                setError(errorMessages.invalidCredentials);
-                setShowErrorModal(true);
-                setIsLoading(false);
-                return;
-            }
-
-            // Successful login
-            console.log("Login successful:", {
-                email: formData.email,
-                role: user.role,
+            let response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    correo: formData.email, // Nombre del campo en tu DTO de NestJS
+                    password: formData.password,
+                }),
             });
-
-            // Store user info (in real app, this would be handled by auth system)
-            localStorage.setItem(
-                "user",
-                JSON.stringify({
-                    email: formData.email,
-                    role: user.role,
-                    name: user.name,
-                })
-            );
-
-            // Redirect to dashboard
-            navigate("/");
+            let json = await response.json();
+            if (response.status === 404) {
+                setShowErrorModal(true);
+                setError(json.error);
+            }
+            if (response.status === 403) {
+                setShowErrorModal(true);
+                setError(json.message);
+            }
+            if (response.status === 200 || response.status === 201) {
+                // create in localStorage
+                localStorage.setItem("user", json.user.correo);
+                localStorage.setItem("role", json.user.rol);
+                localStorage.setItem("name", json.user.nombre);
+                setUser({
+                    email: json.user.correo,
+                    role: json.user.rol,
+                    name: json.user.nombre,
+                });
+                if (json?.message === "passwordChangeRequired") {
+                    navigate("/change-password");
+                } else {
+                    navigate("/dashboard");
+                }
+                // setUser(json);
+            }
         } catch (error) {
-            setError(errorMessages.serverError);
+            // Manejar errores de red (ej: el servidor está caído o inaccesible)
+            console.error("Network Error:", error);
+            setError(error);
             setShowErrorModal(true);
         } finally {
             setIsLoading(false);
         }
     };
 
-    const getErrorIcon = (errorType: string) => {
-        switch (errorType) {
-            case "server":
-            case "network":
-                return "🔧";
-            case "security":
-                return "🔒";
-            case "maintenance":
-                return "⚠️";
-            default:
-                return "❌";
-        }
-    };
-
+    // Mantenemos la función de demo, pero NO llama a la lógica mock
     const fillDemoCredentials = (role: string) => {
         const credentials = {
             admin: { email: "admin@sportbodygym.com", password: "admin123" },
@@ -320,7 +246,7 @@ export default function LoginPage({
                                     variant="link"
                                     className="px-0 text-orange-600 hover:text-orange-700"
                                 >
-                                    ¿Olvidaste tu contraseña?
+                                    ¿Olvidaste tu contraseña?
                                 </Button>
                             </div>
 
@@ -352,13 +278,6 @@ export default function LoginPage({
                                     size="sm"
                                     onClick={() => {
                                         fillDemoCredentials("admin");
-                                        setUser(
-                                            users.find(
-                                                (user) =>
-                                                    user.role ===
-                                                    "Administrator"
-                                            )
-                                        );
                                     }}
                                     className="text-xs"
                                 >
@@ -369,12 +288,6 @@ export default function LoginPage({
                                     size="sm"
                                     onClick={() => {
                                         fillDemoCredentials("receptionist");
-                                        setUser(
-                                            users.find(
-                                                (user) =>
-                                                    user.role === "Receptionist"
-                                            )
-                                        );
                                     }}
                                     className="text-xs"
                                 >
@@ -385,13 +298,6 @@ export default function LoginPage({
                                     size="sm"
                                     onClick={() => {
                                         fillDemoCredentials("medical");
-                                        setUser(
-                                            users.find(
-                                                (user) =>
-                                                    user.role ===
-                                                    "Medical Staff"
-                                            )
-                                        );
                                     }}
                                     className="text-xs"
                                 >
@@ -402,11 +308,6 @@ export default function LoginPage({
                                     size="sm"
                                     onClick={() => {
                                         fillDemoCredentials("member");
-                                        setUser(
-                                            users.find(
-                                                (user) => user.role === "Member"
-                                            )
-                                        );
                                     }}
                                     className="text-xs"
                                 >
@@ -425,9 +326,7 @@ export default function LoginPage({
                 <DialogContent className="max-w-md">
                     <DialogHeader>
                         <div className="flex items-center gap-3 mb-2">
-                            <div className="text-2xl">
-                                {error && getErrorIcon(error.type)}
-                            </div>
+                            <div className="text-2xl">{error}</div>
                             <DialogTitle className="text-lg font-semibold text-red-600">
                                 {error?.title}
                             </DialogTitle>
@@ -441,7 +340,7 @@ export default function LoginPage({
                             onClick={() => setShowErrorModal(false)}
                             className="flex-1 bg-orange-500 hover:bg-orange-600"
                         >
-                            Try Again
+                            Intentar de Nuevo
                         </Button>
                         {error?.type === "server" ||
                         error?.type === "network" ? (
@@ -449,13 +348,12 @@ export default function LoginPage({
                                 variant="outline"
                                 onClick={() => {
                                     setShowErrorModal(false);
-                                    // In real app, this would open support contact
                                     alert(
-                                        "Support contact: support@sportbodygym.com"
+                                        "Contacto de soporte: support@sportbodygym.com"
                                     );
                                 }}
                             >
-                                Contact Support
+                                Contactar Soporte
                             </Button>
                         ) : null}
                     </div>

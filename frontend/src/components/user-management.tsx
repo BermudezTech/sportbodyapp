@@ -106,7 +106,7 @@ export default function UserManagement() {
                 newMemberForm.fecha_nacimiento
             ).toISOString(),
             nombre_usuario: newMemberForm.correo,
-            password: "123456",
+            password: null,
         };
         let response = await fetch("http://localhost:3000/api/usuarios", {
             method: "POST",

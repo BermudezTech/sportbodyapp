@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { LogOut } from "lucide-react";
 import { NavLink } from "react-router";
+import { getInitials } from "@/helpers/getInitials";
 
 export default function Sidebar({ navigationItems, user }: any) {
     return (
@@ -38,8 +39,7 @@ export default function Sidebar({ navigationItems, user }: any) {
                                 src={user?.avatar || "/placeholder.svg"}
                             />
                             <AvatarFallback>
-                                {user?.name.split(" ")[0][0] +
-                                    user?.name.split(" ")[1][0] || ""}
+                                {getInitials(user.name)}
                             </AvatarFallback>
                         </Avatar>
                         <div>
@@ -47,13 +47,13 @@ export default function Sidebar({ navigationItems, user }: any) {
                                 {user.name}
                             </p>
                             <p className="text-sm text-gray-400">
-                                {user.role === "Member"
+                                {user.role === "afiliado"
                                     ? "Afiliado"
-                                    : user.role === "Receptionist"
+                                    : user.role === "recepcionista"
                                     ? "Recepcionista"
-                                    : user.role === "Medical Staff"
+                                    : user.role === "medico"
                                     ? "Personal médico"
-                                    : user.role === "Administrator"
+                                    : user.role === "administrador"
                                     ? "Administrador"
                                     : ""}
                             </p>
@@ -63,6 +63,9 @@ export default function Sidebar({ navigationItems, user }: any) {
                         <Button
                             variant="ghost"
                             className="w-full justify-start text-white hover:bg-red-600"
+                            onClick={() => {
+                                localStorage.clear();
+                            }}
                         >
                             <LogOut className="mr-3 h-5 w-5" />
                             Cerrar sesión

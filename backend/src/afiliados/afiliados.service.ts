@@ -33,7 +33,7 @@ export class AfiliadosService {
             telefono: data.telefono,
             fecha_nacimiento: data.fecha_nacimiento,
             nombre_usuario: data.correo,
-            password: 'temporal123',
+            password: null,
             tipo_usuario: 'afiliado',
           },
         },
