@@ -7,6 +7,7 @@ import {
   Put,
   Param,
   Delete,
+  Patch,
 } from '@nestjs/common';
 import { AfiliadosService } from './afiliados.service';
 import { CreateAfiliadoDto } from './dto/create-afiliado.dto';
@@ -19,6 +20,11 @@ export class AfiliadosController {
   @Get()
   findAll() {
     return this.afiliadosService.findAll();
+  }
+
+  @Patch('profile')
+  findOne(@Body() body: { correo: string }) {
+    return this.afiliadosService.findOne(body.correo);
   }
 
   @Post()

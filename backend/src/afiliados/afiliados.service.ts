@@ -16,6 +16,20 @@ export class AfiliadosService {
     });
   }
 
+  async findOne(correo: string) {
+    const afiliado = await this.prisma.afiliados.findFirst({
+      where: {
+        Usuario: {
+          correo,
+        },
+      },
+      include: {
+        Usuario: true,
+      },
+    });
+    return afiliado;
+  }
+
   create(data: CreateAfiliadoDto) {
     return this.prisma.afiliados.create({
       data: {
