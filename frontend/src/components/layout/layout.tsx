@@ -34,7 +34,12 @@ export default function Layout({ user, setUser }: { user: any; setUser: any }) {
             case "afiliado":
                 return [
                     ...baseItems,
-                    { icon: User, label: "Mi perfil", id: "profile" },
+                    {
+                        icon: User,
+                        label: "Mi perfil",
+                        id: "profile",
+                        to: "/my-profile",
+                    },
                     {
                         icon: QrCode,
                         label: "Acceso QR",

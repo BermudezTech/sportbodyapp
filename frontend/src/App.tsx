@@ -17,6 +17,7 @@ import MembersView from "./components/members-view";
 import QRComponent from "./components/qr-component";
 import AccessControl from "./components/access-control";
 import QRTest from "./components/qr-test";
+import MyProfile from "./pages/myprofile";
 
 function App() {
     let [user, setUser] = useState<{
@@ -53,6 +54,7 @@ function App() {
                     path="/dashboard"
                     element={<DashboardContent userRole={user.role} />}
                 />
+                <Route path="/my-profile" element={<MyProfile />} />
                 <Route
                     path="/membership-management"
                     element={<MembershipManagement />}
