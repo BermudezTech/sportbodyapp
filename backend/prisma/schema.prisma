@@ -28,7 +28,7 @@ model Afiliados {
   documento         String? @unique
   fecha_afiliacion  DateTime?
   fecha_vencimiento DateTime?
-  qr_code           String?
+  qr_code           String? @unique
 
   // Nuevos campos para CRUD
   fecha_nacimiento     DateTime?

@@ -88,7 +88,12 @@ function ReceptionistDashboard() {
                             <p className="text-sm text-gray-600">
                                 Listo para escanear QR de usuario
                             </p>
-                            <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                            <Button
+                                className="w-full bg-orange-500 hover:bg-orange-600"
+                                onClick={() => {
+                                    navigate("/access-control");
+                                }}
+                            >
                                 Iniciar escaneo
                             </Button>
                         </div>

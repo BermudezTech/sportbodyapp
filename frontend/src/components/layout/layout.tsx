@@ -35,7 +35,12 @@ export default function Layout({ user, setUser }: { user: any; setUser: any }) {
                 return [
                     ...baseItems,
                     { icon: User, label: "Mi perfil", id: "profile" },
-                    { icon: QrCode, label: "Acceso QR", id: "qr-access" },
+                    {
+                        icon: QrCode,
+                        label: "Acceso QR",
+                        id: "qr-access",
+                        to: "/qr-code",
+                    },
                     {
                         icon: Key,
                         label: "Mi locker",
@@ -62,6 +67,7 @@ export default function Layout({ user, setUser }: { user: any; setUser: any }) {
                         icon: QrCode,
                         label: "Control de acceso",
                         id: "access-control",
+                        to: "/access-control",
                     },
                     {
                         icon: Key,
@@ -79,7 +85,12 @@ export default function Layout({ user, setUser }: { user: any; setUser: any }) {
             case "medico":
                 return [
                     ...baseItems,
-                    { icon: Users, label: "Afiliados", id: "members" },
+                    {
+                        icon: Users,
+                        label: "Afiliados",
+                        id: "members",
+                        to: "members-view",
+                    },
                     {
                         icon: Dumbbell,
                         label: "Planes de entrenamiento",

@@ -33,7 +33,12 @@ export class AuthService {
         return {
           status: 200,
           message: 'passwordChangeRequired', // Indica al frontend que debe cambiar la contraseña
-          user: { id: user.id_usuario, correo: user.correo }, // Devuelve datos básicos del usuario
+          user: {
+            id: user.id_usuario,
+            correo: user.correo,
+            rol: user.tipo_usuario,
+            nombre: `${user.nombre} ${user.apellido}`,
+          }, // Devuelve datos básicos del usuario
         };
       } else {
         // Si no cumple la regla de "email como password", falla el login.

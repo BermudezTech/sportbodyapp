@@ -22,7 +22,7 @@ export class AfiliadosService {
         documento: data.documento,
         fecha_afiliacion: new Date(),
         fecha_vencimiento: new Date(),
-        qr_code: 'QR_temp',
+        qr_code: crypto.randomUUID(),
         contacto_emergencia: data.contacto_emergencia,
         tipo_membresia: 'mensual',
         Usuario: {

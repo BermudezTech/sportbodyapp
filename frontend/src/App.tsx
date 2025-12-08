@@ -13,6 +13,10 @@ import LockerManagement from "./components/locker-management";
 import UserManagement from "./components/user-management";
 import ChangePasswordPage from "./pages/changePassword";
 import LockerInfo from "./components/locker-view";
+import MembersView from "./components/members-view";
+import QRComponent from "./components/qr-component";
+import AccessControl from "./components/access-control";
+import QRTest from "./components/qr-test";
 
 function App() {
     let [user, setUser] = useState<{
@@ -41,6 +45,7 @@ function App() {
             <Route path="/" element={<Navigate to="/login" />} />
             <Route path="/login" element={<LoginPage setUser={setUser} />} />
             <Route path="/change-password" element={<ChangePasswordPage />} />
+            <Route path="/qr-test" element={<QRTest />} />
 
             {/* Rutas con layout del dashboard */}
             <Route element={<Layout user={user} setUser={setUser} />}>
@@ -52,17 +57,15 @@ function App() {
                     path="/membership-management"
                     element={<MembershipManagement />}
                 />
+                <Route path="/qr-code" element={<QRComponent />} />
+                <Route path="/access-control" element={<AccessControl />} />
+                <Route path="/members-view" element={<MembersView />} />
                 <Route path="/user-management" element={<UserManagement />} />
                 <Route
                     path="/locker-management"
                     element={<LockerManagement />}
                 />
-                <Route
-                    path="/locker-view"
-                    element={
-                        <LockerInfo id="1" ubicacion="A1" estado="disponible" />
-                    }
-                />
+                <Route path="/locker-view" element={<LockerInfo />} />
                 <Route path="/billing" element={<BillingPayment />} />
                 <Route
                     path="/workout-progress"

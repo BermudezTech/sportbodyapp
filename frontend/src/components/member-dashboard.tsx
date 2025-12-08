@@ -1,11 +1,11 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { QrCode } from "lucide-react";
 import { CardDescription } from "@/components/ui/card";
 import { Dumbbell } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { NavLink } from "react-router";
+import QRComponent from "./qr-component";
 
 function MemberDashboard() {
     return (
@@ -71,27 +71,7 @@ function MemberDashboard() {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <Card>
-                    <CardHeader>
-                        <CardTitle className="flex items-center gap-2">
-                            <QrCode className="h-5 w-5 text-orange-500" />
-                            Acceso rápido
-                        </CardTitle>
-                        <CardDescription>
-                            Escanea el código QR para ingresar al gimnasio
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent className="text-center">
-                        <div className="w-48 h-48 mx-auto bg-gray-100 rounded-lg flex items-center justify-center mb-4">
-                            <div className="w-40 h-40 bg-black rounded-lg flex items-center justify-center">
-                                <QrCode className="h-20 w-20 text-white" />
-                            </div>
-                        </div>
-                        <p className="text-sm text-gray-600">
-                            Muestra este código QR en la entrada
-                        </p>
-                    </CardContent>
-                </Card>
+                <QRComponent />
 
                 <Card>
                     <CardHeader>
