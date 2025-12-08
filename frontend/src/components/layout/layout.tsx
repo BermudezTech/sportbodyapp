@@ -36,7 +36,12 @@ export default function Layout({ user, setUser }: { user: any; setUser: any }) {
                     ...baseItems,
                     { icon: User, label: "Mi perfil", id: "profile" },
                     { icon: QrCode, label: "Acceso QR", id: "qr-access" },
-                    { icon: Key, label: "Mi locker", id: "locker" },
+                    {
+                        icon: Key,
+                        label: "Mi locker",
+                        id: "locker",
+                        to: "/locker-view",
+                    },
                     { icon: CreditCard, label: "Pagos", id: "payments" },
                     {
                         icon: Dumbbell,

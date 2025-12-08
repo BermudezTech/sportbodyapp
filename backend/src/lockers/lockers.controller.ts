@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Patch, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Body,
+  BadRequestException,
+} from '@nestjs/common';
 import { LockersService } from './lockers.service';
 
 @Controller('lockers')
@@ -24,6 +31,12 @@ export class LockersController {
       Number(body.id_afiliado),
       body.estado,
     );
+  }
+
+  @Patch('getbymail')
+  getLockerByMail(@Body() body: { correo: string }) {
+    if (!body.correo) throw new BadRequestException('Correo no enviado');
+    return this.lockersService.getLockerByMail(body.correo);
   }
 
   @Patch(':id/free')

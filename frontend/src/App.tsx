@@ -12,6 +12,7 @@ import WorkoutInProgress from "./components/workout-in-progress";
 import LockerManagement from "./components/locker-management";
 import UserManagement from "./components/user-management";
 import ChangePasswordPage from "./pages/changePassword";
+import LockerInfo from "./components/locker-view";
 
 function App() {
     let [user, setUser] = useState<{
@@ -55,6 +56,12 @@ function App() {
                 <Route
                     path="/locker-management"
                     element={<LockerManagement />}
+                />
+                <Route
+                    path="/locker-view"
+                    element={
+                        <LockerInfo id="1" ubicacion="A1" estado="disponible" />
+                    }
                 />
                 <Route path="/billing" element={<BillingPayment />} />
                 <Route

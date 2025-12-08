@@ -34,6 +34,31 @@ export class LockersService {
     return locker;
   }
 
+  async getLockerByMail(correo: string) {
+    const locker = await this.prisma.lockers.findFirst({
+      where: {
+        Afiliado: {
+          Usuario: {
+            correo,
+          },
+        },
+      },
+      include: {
+        Afiliado: {
+          include: { Usuario: true },
+        },
+      },
+    });
+
+    if (!locker) {
+      throw new NotFoundException(
+        `No se encontró locker para el usuario ${correo}`,
+      );
+    }
+
+    return locker;
+  }
+
   async assignLocker(
     id: number,
     id_afiliado: number,

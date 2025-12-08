@@ -55,7 +55,6 @@ export default function LockerManagement() {
                 }
             );
         } else {
-            console.log(selectedState, afiliadoID);
             fetch(
                 "http://localhost:3000/api/lockers/" +
                     selectedLocker?.id +
@@ -245,7 +244,6 @@ export default function LockerManagement() {
                                             setAfiliadoName(
                                                 `${encontrado.Usuario.nombre} ${encontrado.Usuario.apellido}`
                                             );
-                                            console.log(encontrado);
                                             setAfiliadoID(
                                                 encontrado.id_afiliado
                                             );
