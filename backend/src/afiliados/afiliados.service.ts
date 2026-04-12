@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
-import { CreateAfiliadoDto } from './dto/create-afiliado.dto';
-import { UpdateAfiliadoDto } from './dto/update-afiliado.dto';
+import {Injectable} from '@nestjs/common';
+import {PrismaService} from '../prisma/prisma.service';
+import {CreateAfiliadoDto} from './dto/create-afiliado.dto';
+import {UpdateAfiliadoDto} from './dto/update-afiliado.dto';
 
 @Injectable()
 export class AfiliadosService {
@@ -78,30 +78,34 @@ export class AfiliadosService {
 
     // Filtrar undefined (si no vino en el body, no se actualiza)
     const cleanAfiliado = Object.fromEntries(
-      Object.entries(afiliadoData).filter(([_, v]) => v !== undefined),
+      Object.entries(afiliadoData as Record<string, unknown>).filter(
+        ([, v]) => v !== undefined,
+      ),
     );
 
     const cleanUsuario = Object.fromEntries(
-      Object.entries(usuarioData).filter(([_, v]) => v !== undefined),
+      Object.entries(usuarioData as Record<string, unknown>).filter(
+        ([, v]) => v !== undefined,
+      ),
     );
 
     return this.prisma.afiliados.update({
-      where: { id_afiliado: id },
+      where: {id_afiliado: id},
       data: {
         ...cleanAfiliado,
         Usuario: Object.keys(cleanUsuario).length
-          ? { update: cleanUsuario }
+          ? {update: cleanUsuario}
           : undefined,
       },
-      include: { Usuario: true },
+      include: {Usuario: true},
     });
   }
 
   async delete(id: number) {
     // 1. Obtener afiliado con su usuario
     const afiliado = await this.prisma.afiliados.findUnique({
-      where: { id_afiliado: id },
-      include: { Usuario: true },
+      where: {id_afiliado: id},
+      include: {Usuario: true},
     });
 
     if (!afiliado) {
@@ -110,14 +114,14 @@ export class AfiliadosService {
 
     // 2. Eliminar el afiliado primero (por la FK)
     await this.prisma.afiliados.delete({
-      where: { id_afiliado: id },
+      where: {id_afiliado: id},
     });
 
     // 3. Eliminar el usuario relacionado
     await this.prisma.usuarios.delete({
-      where: { id_usuario: afiliado.Usuario.id_usuario },
+      where: {id_usuario: afiliado.Usuario.id_usuario},
     });
 
-    return { message: 'Afiliado y usuario eliminados correctamente' };
+    return {message: 'Afiliado y usuario eliminados correctamente'};
   }
 }

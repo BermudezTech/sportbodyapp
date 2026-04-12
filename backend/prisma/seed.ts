@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import {PrismaClient} from '@prisma/client';
 const prisma = new PrismaClient();
 
 async function main() {
@@ -7,7 +7,7 @@ async function main() {
   // Crear lockers del 1 al 100 si no existen
   for (let i = 1; i <= totalLockers; i++) {
     await prisma.lockers.upsert({
-      where: { id_locker: i },
+      where: {id_locker: i},
       update: {},
       create: {
         id_locker: i,

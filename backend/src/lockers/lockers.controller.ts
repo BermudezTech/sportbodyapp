@@ -6,7 +6,7 @@ import {
   Body,
   BadRequestException,
 } from '@nestjs/common';
-import { LockersService } from './lockers.service';
+import {LockersService} from './lockers.service';
 
 @Controller('lockers')
 export class LockersController {
@@ -34,7 +34,7 @@ export class LockersController {
   }
 
   @Patch('getbymail')
-  getLockerByMail(@Body() body: { correo: string }) {
+  getLockerByMail(@Body() body: {correo: string}) {
     if (!body.correo) throw new BadRequestException('Correo no enviado');
     return this.lockersService.getLockerByMail(body.correo);
   }

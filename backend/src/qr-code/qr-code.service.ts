@@ -1,5 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import {Injectable, NotFoundException} from '@nestjs/common';
+import {PrismaService} from 'src/prisma/prisma.service';
 
 @Injectable()
 export class QrCodeService {
@@ -20,7 +20,7 @@ export class QrCodeService {
       throw new NotFoundException('QR para el usuario no encontrado');
     }
     const qr_code = afiliado.qr_code;
-    return { qr_code };
+    return {qr_code};
   }
 
   async validateQR(qr_code: string) {

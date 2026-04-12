@@ -5,8 +5,8 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { LoginDto } from './dto/login.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import {LoginDto} from './dto/login.dto';
+import {PrismaService} from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt'; // Importamos bcrypt
 
 @Injectable()
@@ -71,7 +71,7 @@ export class AuthService {
 
   async changeUserPassword(correo: string, newPassword: string) {
     const user = await this.prisma.usuarios.findUnique({
-      where: { correo },
+      where: {correo},
     });
     if (!user) {
       throw new NotFoundException('Usuario no encontrado');
@@ -80,8 +80,8 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     await this.prisma.usuarios.update({
-      where: { correo },
-      data: { password: hashedPassword },
+      where: {correo},
+      data: {password: hashedPassword},
     });
   }
 }

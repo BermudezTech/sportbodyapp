@@ -1,5 +1,5 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { QrCodeService } from './qr-code.service';
+import {Test, TestingModule} from '@nestjs/testing';
+import {QrCodeService} from './qr-code.service';
 
 describe('QrCodeService', () => {
   let service: QrCodeService;

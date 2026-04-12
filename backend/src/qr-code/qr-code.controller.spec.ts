@@ -1,5 +1,5 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { QrCodeController } from './qr-code.controller';
+import {Test, TestingModule} from '@nestjs/testing';
+import {QrCodeController} from './qr-code.controller';
 
 describe('QrCodeController', () => {
   let controller: QrCodeController;

@@ -1,5 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import {Injectable, NotFoundException} from '@nestjs/common';
+import {PrismaService} from '../prisma/prisma.service';
 
 @Injectable()
 export class LockersService {
@@ -14,13 +14,13 @@ export class LockersService {
           },
         },
       },
-      orderBy: { id_locker: 'asc' },
+      orderBy: {id_locker: 'asc'},
     });
   }
 
   async findOne(id: number) {
     const locker = await this.prisma.lockers.findUnique({
-      where: { id_locker: id },
+      where: {id_locker: id},
       include: {
         Afiliado: {
           include: {
@@ -45,7 +45,7 @@ export class LockersService {
       },
       include: {
         Afiliado: {
-          include: { Usuario: true },
+          include: {Usuario: true},
         },
       },
     });
@@ -65,7 +65,7 @@ export class LockersService {
     estado: 'disponible' | 'ocupado' | 'alquilado',
   ) {
     return this.prisma.lockers.update({
-      where: { id_locker: id },
+      where: {id_locker: id},
       data: {
         id_afiliado,
         estado,
@@ -75,7 +75,7 @@ export class LockersService {
 
   async freeLocker(id: number) {
     return this.prisma.lockers.update({
-      where: { id_locker: id },
+      where: {id_locker: id},
       data: {
         id_afiliado: null,
         estado: 'disponible',
@@ -88,8 +88,8 @@ export class LockersService {
     estado: 'disponible' | 'ocupado' | 'alquilado',
   ) {
     return this.prisma.lockers.update({
-      where: { id_locker: id },
-      data: { estado },
+      where: {id_locker: id},
+      data: {estado},
     });
   }
 }

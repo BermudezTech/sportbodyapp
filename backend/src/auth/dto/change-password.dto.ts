@@ -1,6 +1,6 @@
 // src/auth/dto/change-password.dto.ts
 
-import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
+import {IsEmail, IsNotEmpty, IsString, MinLength} from 'class-validator';
 
 export class ChangePasswordDto {
   @IsEmail()

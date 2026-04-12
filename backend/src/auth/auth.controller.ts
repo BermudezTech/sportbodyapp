@@ -1,7 +1,7 @@
-import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { type LoginDto } from './dto/login.dto';
-import { ChangePasswordDto } from './dto/change-password.dto';
+import {BadRequestException, Body, Controller, Post} from '@nestjs/common';
+import {AuthService} from './auth.service';
+import {type LoginDto} from './dto/login.dto';
+import {ChangePasswordDto} from './dto/change-password.dto';
 
 @Controller('auth')
 export class AuthController {

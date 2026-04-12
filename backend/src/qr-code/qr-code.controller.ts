@@ -5,20 +5,20 @@ import {
   BadRequestException,
   Get,
 } from '@nestjs/common';
-import { QrCodeService } from './qr-code.service';
+import {QrCodeService} from './qr-code.service';
 
 @Controller('qr-code')
 export class QrCodeController {
   constructor(private readonly qrService: QrCodeService) {}
   @Patch()
-  getQRforUser(@Body() body: { correo: string }) {
+  getQRforUser(@Body() body: {correo: string}) {
     if (!body.correo) {
       throw new BadRequestException('Correo no proporcionado');
     }
     return this.qrService.getQRByMail(body.correo);
   }
   @Patch('validate')
-  validateQR(@Body() body: { qr_code: string }) {
+  validateQR(@Body() body: {qr_code: string}) {
     if (!body.qr_code) {
       throw new BadRequestException('QR no proporcionado');
     }

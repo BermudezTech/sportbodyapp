@@ -9,9 +9,9 @@ import {
   Delete,
   Patch,
 } from '@nestjs/common';
-import { AfiliadosService } from './afiliados.service';
-import { CreateAfiliadoDto } from './dto/create-afiliado.dto';
-import { UpdateAfiliadoDto } from './dto/update-afiliado.dto';
+import {AfiliadosService} from './afiliados.service';
+import {CreateAfiliadoDto} from './dto/create-afiliado.dto';
+import {UpdateAfiliadoDto} from './dto/update-afiliado.dto';
 
 @Controller('afiliados')
 export class AfiliadosController {
@@ -23,7 +23,7 @@ export class AfiliadosController {
   }
 
   @Patch('profile')
-  findOne(@Body() body: { correo: string }) {
+  findOne(@Body() body: {correo: string}) {
     return this.afiliadosService.findOne(body.correo);
   }
 

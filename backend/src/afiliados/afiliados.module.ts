@@ -1,7 +1,7 @@
-import { Module } from '@nestjs/common';
-import { AfiliadosService } from './afiliados.service';
-import { AfiliadosController } from './afiliados.controller';
-import { PrismaModule } from '../prisma/prisma.module';
+import {Module} from '@nestjs/common';
+import {AfiliadosService} from './afiliados.service';
+import {AfiliadosController} from './afiliados.controller';
+import {PrismaModule} from '../prisma/prisma.module';
 
 @Module({
   providers: [AfiliadosService],
